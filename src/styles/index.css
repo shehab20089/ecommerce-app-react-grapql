@@ -11,16 +11,18 @@
 }
 /* Resets */
 html {
-  font-size: 12px;
+  font-size: 18px;
 }
 * {
   margin: 0;
   box-sizing: border-box;
+  transition: all 0.2s ease-out;
 }
 body {
   background: var(--clr-main-bg);
   font-family: "Raleway", sans-serif;
   font-weight: 400;
+  line-height: 1.5;
 }
 img {
   max-width: 100%;
