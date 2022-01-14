@@ -3,19 +3,13 @@ import {
   CategoryTitle,
   ProductPageContainer,
   ProductsListContainer,
-  ProductCard,
-  ProductCardAvatar,
-  ProductCardDescription,
-  ProductCardTitle,
-  ProductCardPrice,
-  ProductCardActions,
-  ProductCardCartBtn,
 } from "./ProductsList.styles";
-import { Icon } from "../../components/Base";
-import image from "../../assets/images/Image.png";
-import cartIcon from "../../assets/images/whiteCartIcon.svg";
 
-export default class ProductsList extends Component {
+import { fetchProductsByCategoryAsync } from "../../Store/Products/Products.slice";
+import { connect } from "react-redux";
+import ProductCard from "../../components/ProductCard/ProductCard";
+
+class ProductsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,35 +34,39 @@ export default class ProductsList extends Component {
           price: 50,
           image: "",
         },
+        {
+          name: "Hello Mother Fuckers ",
+          price: "$50",
+          image: "",
+        },
       ],
     };
   }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.title != prevProps.title)
+      this.props.fetchProductsByCategoryAsync(this.props.title);
+  }
+
   render() {
-    const { products } = this.state;
+    const { title, productsList } = this.props;
     return (
       <ProductPageContainer>
-        <CategoryTitle>Category Name</CategoryTitle>
+        <CategoryTitle>{title}</CategoryTitle>
 
         <ProductsListContainer>
-          {products.map((p) => (
-            <ProductCard>
-              <ProductCardAvatar src={image} />
-              <ProductCardDescription>
-                <ProductCardActions>
-                  <ProductCardCartBtn>
-                    <Icon
-                      size={{ width: "30px", height: "30px" }}
-                      icon={cartIcon}
-                    ></Icon>
-                  </ProductCardCartBtn>
-                </ProductCardActions>
-                <ProductCardTitle>Pla</ProductCardTitle>
-                <ProductCardPrice>$50</ProductCardPrice>
-              </ProductCardDescription>
-            </ProductCard>
+          {productsList.map((p) => (
+            <ProductCard key={p.id} product={p}></ProductCard>
           ))}
         </ProductsListContainer>
       </ProductPageContainer>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  title: state.categories.selectedCategory,
+  productsList: state.products.products,
+});
+const mapDispatchToProps = { fetchProductsByCategoryAsync };
+export default connect(mapStateToProps, mapDispatchToProps)(ProductsList);
