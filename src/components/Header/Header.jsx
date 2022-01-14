@@ -69,6 +69,7 @@ class Header extends Component {
               {currencies.map((currency) => {
                 return (
                   <CurrencyDropDownItem
+                    key={currency.symbol}
                     onClick={() => this.props.changeCurrency(currency)}
                   >
                     {currency.symbol}&nbsp;{currency.label}

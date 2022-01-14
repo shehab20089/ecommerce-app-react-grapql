@@ -15,7 +15,7 @@ import cartIcon from "../../assets/images/whiteCartIcon.svg";
 
 export default class ProductCard extends Component {
   render() {
-    const { name, price, gallery } = this.props.product;
+    const { name, currentPrice, gallery } = this.props.product;
     return (
       <ProductCardContainer>
         <ProductCardAvatar src={gallery[0]}></ProductCardAvatar>
@@ -29,7 +29,11 @@ export default class ProductCard extends Component {
             </ProductCardCartBtn>
           </ProductCardActions>
           <ProductCardTitle>{name}</ProductCardTitle>
-          <ProductCardPrice>{price}</ProductCardPrice>
+          <ProductCardPrice>
+            {currentPrice.currency.symbol}
+            &nbsp;
+            {currentPrice.amount}
+          </ProductCardPrice>
         </ProductCardDescription>
       </ProductCardContainer>
     );

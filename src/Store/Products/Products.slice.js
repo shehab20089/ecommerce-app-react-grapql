@@ -3,7 +3,7 @@ import { ProductsService } from "../../services";
 
 const initialState = {
   products: [],
-  selectedProduct: "",
+  selectedProduct: {},
 };
 
 export const productsSlice = createSlice({
