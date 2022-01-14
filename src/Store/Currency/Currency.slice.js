@@ -18,7 +18,7 @@ export const currenciesSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchCurrenciesAsync.fulfilled, (state, action) => {
       state.currencies = action.payload;
-      state.selectedCurrency = action.payload ? action.payload[0].id : "";
+      state.selectedCurrency = action.payload ? action.payload[0] : "";
     });
   },
 });

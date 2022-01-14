@@ -18,6 +18,10 @@ import {
   fetchCategoriesAsync,
   selectCategory,
 } from "../../Store/Categories/categories.slice";
+import {
+  fetchCurrenciesAsync,
+  changeCurrency,
+} from "../../Store/Currency/Currency.slice";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -27,6 +31,7 @@ class Header extends Component {
   }
   componentDidMount() {
     this.props.fetchCategoriesAsync();
+    this.props.fetchCurrenciesAsync();
   }
 
   handleNavChange = (activeLink) => {
@@ -35,6 +40,7 @@ class Header extends Component {
 
   render() {
     const { selectedCategory, categories } = this.props.categories;
+    const { selectedCurrency, currencies } = this.props.currencies;
 
     return (
       <StyledHeader>
@@ -54,16 +60,21 @@ class Header extends Component {
         <LogoContainer></LogoContainer>
         <ActionsContainer>
           <CurrencyContainer>
-            $
+            {selectedCurrency.symbol}
             <Icon
               size={{ width: "8px", height: "8px" }}
               icon={downArrowIcon}
             ></Icon>
             <CurrencyDropDownContainer>
-              <CurrencyDropDownItem>items</CurrencyDropDownItem>
-              <CurrencyDropDownItem>items</CurrencyDropDownItem>
-              <CurrencyDropDownItem>items</CurrencyDropDownItem>
-              <CurrencyDropDownItem>items</CurrencyDropDownItem>
+              {currencies.map((currency) => {
+                return (
+                  <CurrencyDropDownItem
+                    onClick={() => this.props.changeCurrency(currency)}
+                  >
+                    {currency.symbol}&nbsp;{currency.label}
+                  </CurrencyDropDownItem>
+                );
+              })}
             </CurrencyDropDownContainer>
           </CurrencyContainer>
           <OverLayContainer>
@@ -84,7 +95,13 @@ Header.propTypes = {
 
 const mapStateToProps = (state) => ({
   categories: state.categories,
+  currencies: state.currencies,
 });
 
-const mapDispatchToProps = { selectCategory, fetchCategoriesAsync };
+const mapDispatchToProps = {
+  selectCategory,
+  fetchCategoriesAsync,
+  changeCurrency,
+  fetchCurrenciesAsync,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

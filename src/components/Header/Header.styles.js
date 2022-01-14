@@ -79,27 +79,33 @@ export const CurrencyDropDownContainer = styled.div`
   z-index: 2;
   left: -20px;
   animation: ${dropdownFade} 0.3s linear;
-
   box-shadow: 0px 4px 35px 0px hsla(210, 5%, 67%, 0.19);
   min-width: 114px;
-  &:after {
-    content: "";
-    position: absolute;
-    top: -30px;
-    z-index: 1;
-    opacity: 0;
-    width: 50%;
-    height: 100%;
-  }
+  max-height: 200px;
+  overflow: auto;
+  scroll-behavior: smooth;
+
+  padding-top: 1.12rem;
 `;
 export const CurrencyDropDownItem = styled.div`
-  padding: 1.1rem;
+  padding: 0 1.12rem 1.1rem;
 `;
 export const CurrencyContainer = styled.div`
   position: relative;
   cursor: pointer;
   &:hover ${CurrencyDropDownContainer} {
     display: block;
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: -10px;
+    z-index: 1;
+    opacity: 0;
+    background-color: red;
+    width: 200%;
+    height: 100px;
   }
 `;
 export const OverLayContainer = styled(ActionContainer)``;
