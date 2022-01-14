@@ -12,6 +12,7 @@
 /* Resets */
 html {
   font-size: 18px;
+  scroll-behavior: smooth;
 }
 * {
   margin: 0;
@@ -28,4 +29,12 @@ body {
 img {
   max-width: 100%;
   display: block;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--clr-text-inactive);
 }
