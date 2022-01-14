@@ -10,39 +10,6 @@ import { connect } from "react-redux";
 import ProductCard from "../../components/ProductCard/ProductCard";
 
 class ProductsList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      products: [
-        {
-          name: "ffff",
-          price: 50,
-          image: "",
-        },
-        {
-          name: "ffff",
-          price: 50,
-          image: "",
-        },
-        {
-          name: "ffff",
-          price: 50,
-          image: "",
-        },
-        {
-          name: "ffff",
-          price: 50,
-          image: "",
-        },
-        {
-          name: "Hello Mother Fuckers ",
-          price: "$50",
-          image: "",
-        },
-      ],
-    };
-  }
-
   componentDidUpdate(prevProps) {
     if (this.props.title != prevProps.title)
       this.props.fetchProductsByCategoryAsync(this.props.title);

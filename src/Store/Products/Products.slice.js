@@ -9,11 +9,7 @@ const initialState = {
 export const productsSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {
-    // selectCategory: (state, action) => {
-    //   state.selectedCategory = action.payload;
-    // },
-  },
+  reducers: {},
 
   extraReducers: (builder) => {
     builder.addCase(fetchProductsByCategoryAsync.fulfilled, (state, action) => {
@@ -32,5 +28,4 @@ export const fetchProductsByCategoryAsync = createAsyncThunk(
     return response.data.category.products;
   }
 );
-// export const { selectCategory } = categoriesSlice.actions;
 export default productsSlice.reducer;

@@ -1,41 +1,34 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { CategoriesService } from "../../services";
+import { CurrenciesService } from "../../services";
 
 const initialState = {
-  categories: [],
-  selectedCategory: "",
-  status: "idle",
+  currencies: [],
+  selectedCurrency: "",
 };
 
-export const categoriesSlice = createSlice({
-  name: "categories",
+export const currenciesSlice = createSlice({
+  name: "currency",
   initialState,
-  // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
-    selectCategory: (state, action) => {
-      state.selectedCategory = action.payload;
+    changeCurrency: (state, action) => {
+      state.selectedCurrency = action.payload;
     },
   },
 
   extraReducers: (builder) => {
-    builder
-      .addCase(fetchCategoriesAsync.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchCategoriesAsync.fulfilled, (state, action) => {
-        state.status = "idle";
-        state.categories = action.payload;
-        state.selectedCategory = action.payload ? action.payload[0].name : "";
-      });
+    builder.addCase(fetchCurrenciesAsync.fulfilled, (state, action) => {
+      state.currencies = action.payload;
+      state.selectedCurrency = action.payload ? action.payload[0].id : "";
+    });
   },
 });
 
-export const fetchCategoriesAsync = createAsyncThunk(
-  "categories/fetchCategories",
-  async (amount) => {
-    const response = await CategoriesService.getCategories(amount);
-    return response.data.categories;
+export const fetchCurrenciesAsync = createAsyncThunk(
+  "currencies/fetchCurrencies",
+  async () => {
+    const response = await CurrenciesService.getCurrencies();
+    return response.data.currencies;
   }
 );
-export const { selectCategory } = categoriesSlice.actions;
-export default categoriesSlice.reducer;
+export const { changeCurrency } = currenciesSlice.actions;
+export default currenciesSlice.reducer;
