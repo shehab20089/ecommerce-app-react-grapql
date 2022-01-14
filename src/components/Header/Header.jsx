@@ -14,37 +14,39 @@ import {
 } from "./Header.styles";
 import downArrowIcon from "../../assets/images/Vector.svg";
 import cartIcon from "../../assets/images/EmptyCart.svg";
+import {
+  fetchCategoriesAsync,
+  selectCategory,
+} from "../../Store/Categories/categories.slice";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-export default class Header extends Component {
+class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      menu: [
-        { label: "Women", key: "all" },
-        { label: "men", key: "games" },
-        { label: "kids    ", key: "products" },
-      ],
-      activeLink: "all",
-    };
   }
+  componentDidMount() {
+    this.props.fetchCategoriesAsync();
+  }
+
   handleNavChange = (activeLink) => {
-    this.setState({ ...this.state, activeLink: activeLink });
+    this.props.selectCategory(activeLink);
   };
 
   render() {
-    const { menu, activeLink } = this.state;
+    const { selectedCategory, categories } = this.props.categories;
 
     return (
       <StyledHeader>
         <MenuList>
-          {menu.map((menuItem) => {
+          {categories.map((category) => {
             return (
               <MenuListItem
-                active={activeLink == menuItem.key}
-                onClick={() => this.handleNavChange(menuItem.key)}
+                active={selectedCategory == category.name}
+                key={category.name}
+                onClick={() => this.handleNavChange(category.name)}
               >
-                <MenuListItemLink>{menuItem.label}</MenuListItemLink>
+                <MenuListItemLink>{category.name}</MenuListItemLink>
               </MenuListItem>
             );
           })}
@@ -79,3 +81,10 @@ export default class Header extends Component {
 Header.propTypes = {
   menu: PropTypes.array,
 };
+
+const mapStateToProps = (state) => ({
+  categories: state.categories,
+});
+
+const mapDispatchToProps = { selectCategory, fetchCategoriesAsync };
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
