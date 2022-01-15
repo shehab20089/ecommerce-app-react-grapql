@@ -16,7 +16,7 @@ const dropdownFade = keyframes`
 export const StyledHeader = styled.header`
   display: flex;
   padding: 0 7rem;
-  height: 70px;
+  height: 80px;
   padding-top: 1.2rem;
   justify-content: space-between;
 `;

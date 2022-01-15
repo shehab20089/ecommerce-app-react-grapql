@@ -24,6 +24,7 @@ import {
 } from "../../Store/Currency/Currency.slice";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class Header extends Component {
   constructor(props) {
@@ -57,7 +58,9 @@ class Header extends Component {
             );
           })}
         </MenuList>
-        <LogoContainer></LogoContainer>
+        <Link to="/">
+          <LogoContainer></LogoContainer>
+        </Link>
         <ActionsContainer>
           <CurrencyContainer>
             {selectedCurrency.symbol}
