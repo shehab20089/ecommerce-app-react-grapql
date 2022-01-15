@@ -7,11 +7,15 @@ import {
 import { fetchProductsByCategoryAsync } from "../../Store/Products/Products.slice";
 import { connect } from "react-redux";
 import ProductCard from "../../components/ProductCard/ProductCard";
+import { Link } from "react-router-dom";
 
 class ProductsList extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.title != prevProps.title)
       this.props.fetchProductsByCategoryAsync(this.props.title);
+  }
+  componentDidMount() {
+    this.props.fetchProductsByCategoryAsync(this.props.title);
   }
 
   render() {
@@ -22,7 +26,9 @@ class ProductsList extends Component {
 
         <ProductsListContainer>
           {productsList.map((p) => (
-            <ProductCard key={p.id} product={p}></ProductCard>
+            <Link to={`product/${p.id}`} key={p.id}>
+              <ProductCard product={p}></ProductCard>
+            </Link>
           ))}
         </ProductsListContainer>
       </ProductPageContainer>

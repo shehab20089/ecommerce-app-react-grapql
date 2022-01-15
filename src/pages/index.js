@@ -1,2 +1,3 @@
 import ProductsListPage from "./ProductsListPage/ProductsList";
-export { ProductsListPage };
+import ProductPage from "./ProductPage/ProductPage";
+export { ProductsListPage, ProductPage };
