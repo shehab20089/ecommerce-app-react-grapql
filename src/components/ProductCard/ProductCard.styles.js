@@ -41,11 +41,11 @@ export const ProductCardAvatar = styled.div`
 export const ProductCardDescription = styled.div`
   margin-top: 1.3334rem;
   position: relative;
+  color: var(--clr-black);
 `;
 export const ProductCardTitle = styled.h2`
   font-weight: 300;
   font-size: 1rem;
-  color: var(--clr-black);
 `;
 export const ProductCardPrice = styled.p`
   font-weight: 500;
