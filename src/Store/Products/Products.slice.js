@@ -3,7 +3,13 @@ import { ProductsService } from "../../services";
 
 const initialState = {
   products: [],
-  selectedProduct: {},
+  selectedProduct: {
+    id: "",
+    name: "",
+    gallery: [],
+    prices: [],
+    brand: "",
+  },
 };
 
 export const productsSlice = createSlice({
@@ -15,8 +21,11 @@ export const productsSlice = createSlice({
     builder.addCase(fetchProductsByCategoryAsync.fulfilled, (state, action) => {
       state.products = action.payload;
     });
-    builder.addCase(fetchProductsByCategoryAsync.rejected, (state, action) => {
-      console.log(action);
+    builder.addCase(fetchProductByIdAsync.fulfilled, (state, action) => {
+      state.selectedProduct = action.payload;
+    });
+    builder.addCase(fetchProductByIdAsync.rejected, (state, action) => {
+      console.log(action.payload);
     });
   },
 });
@@ -26,6 +35,13 @@ export const fetchProductsByCategoryAsync = createAsyncThunk(
   async (category) => {
     const response = await ProductsService.getProductsByCategory(category);
     return response.data.category.products;
+  }
+);
+export const fetchProductByIdAsync = createAsyncThunk(
+  "products/fetchProductById",
+  async (productId) => {
+    const response = await ProductsService.getProductsById(productId);
+    return response.data.product;
   }
 );
 export default productsSlice.reducer;
