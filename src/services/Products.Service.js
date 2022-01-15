@@ -61,6 +61,7 @@ function getProductsById(productId) {
        
       }
     `,
+    fetchPolicy: "no-cache",
   });
 }
 
