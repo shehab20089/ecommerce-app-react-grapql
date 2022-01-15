@@ -8,6 +8,7 @@ const initialState = {
     name: "",
     gallery: [],
     prices: [],
+    attributes: [],
     brand: "",
   },
 };
@@ -15,7 +16,11 @@ const initialState = {
 export const productsSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    restSelectedProducts: (state) => {
+      state.selectedProduct = initialState.selectedProduct;
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(fetchProductsByCategoryAsync.fulfilled, (state, action) => {
@@ -44,4 +49,6 @@ export const fetchProductByIdAsync = createAsyncThunk(
     return response.data.product;
   }
 );
+export const { restSelectedProducts } = productsSlice.actions;
+
 export default productsSlice.reducer;
