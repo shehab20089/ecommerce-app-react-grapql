@@ -10,31 +10,60 @@ import {
   ProductPagePriceValue,
   ProductPageDescription,
 } from "./ProductPage.styles";
+import ImageGallery from "../../components/ImageGallery/ImageGallery";
+import { BaseButton } from "../../components/Base";
+import AttributeSelector from "../../components/ِAttributeSelector/AttributeSelector";
 import {
   fetchProductByIdAsync,
   restSelectedProducts,
 } from "../../Store/Products/Products.slice";
-
+import {
+  addItemToCart,
+  updateProductInCart,
+} from "../../Store/Cart/Cart.slice";
 import { connect } from "react-redux";
 import { withParams } from "../../router";
-import ImageGallery from "../../components/ImageGallery/ImageGallery";
-import { BaseButton } from "../../components/Base";
-import AttributeSelector from "../../components/ِAttributeSelector/AttributeSelector";
 
 class ProductsPage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      cartObject: JSON.parse(JSON.stringify(this.props.currentProduct)),
+    };
+  }
+
   async componentDidMount() {
     await this.props.fetchProductByIdAsync(this.props.params.id);
+    if (this.props.currentProduct.id != this.state.cartObject)
+      this.setState({
+        // deep copy
+        cartObject: JSON.parse(JSON.stringify(this.props.currentProduct)),
+      });
   }
   componentWillUnmount() {
     this.props.restSelectedProducts();
   }
-  handleAttributeChange = (item) => {
-    console.log(item);
+  handleAttributeChange = (item, attributeId) => {
+    // deep copy
+    const updatedProduct = JSON.parse(JSON.stringify(this.state.cartObject));
+    const attributeIndex = updatedProduct.attributes.findIndex(
+      (a) => a.id == attributeId
+    );
+    updatedProduct.attributes[attributeIndex].selectedItem = item;
+    this.setState({
+      cartObject: updatedProduct,
+    });
+    this.props.updateProductInCart(updatedProduct);
+  };
+  handleAddToCart = () => {
+    const cartProduct = this.state.cartObject;
+    cartProduct.quantity = 1;
+    this.props.addItemToCart(cartProduct);
   };
   render() {
-    const { id, name, brand, gallery, attributes, currentPrice, description } =
+    const { name, brand, gallery, attributes, currentPrice, description } =
       this.props.currentProduct;
-    console.log(currentPrice);
 
     return (
       <ProductPageContainer>
@@ -61,9 +90,17 @@ class ProductsPage extends Component {
               </ProductPagePriceValue>
             ) : null}
           </ProductPagePriceContainer>
-          <BaseButton size={{ height: "52px", font: "0.9rem" }}>
-            Add to card
-          </BaseButton>
+          {this.props.cartData.id ? (
+            "Already in Cart"
+          ) : (
+            <BaseButton
+              onClick={this.handleAddToCart}
+              size={{ height: "52px", font: "0.9rem" }}
+            >
+              Add to card
+            </BaseButton>
+          )}
+
           <ProductPageDescription
             dangerouslySetInnerHTML={{ __html: description }}
           ></ProductPageDescription>
@@ -83,12 +120,35 @@ const mapStateToProps = (state) => {
       return price.currency.symbol == state.currencies.selectedCurrency.symbol;
     });
   }
+  const productInCart = state.cart.cart.find(
+    (item) => item.id == mappedProduct.id
+  );
+  const isItemInCart = productInCart ? true : false;
+
+  if (currentProduct.attributes) {
+    mappedProduct.attributes = mappedProduct.attributes.map(
+      (attribute, index) => {
+        const newAttribute = { ...attribute };
+
+        newAttribute.selectedItem = !isItemInCart
+          ? attribute.items[0]
+          : productInCart.attributes[index].selectedItem;
+        return newAttribute;
+      }
+    );
+  }
 
   return {
     currentProduct: mappedProduct,
+    cartData: isItemInCart ? productInCart : {},
   };
 };
-const mapDispatchToProps = { fetchProductByIdAsync, restSelectedProducts };
+const mapDispatchToProps = {
+  fetchProductByIdAsync,
+  restSelectedProducts,
+  addItemToCart,
+  updateProductInCart,
+};
 export default connect(
   mapStateToProps,
   mapDispatchToProps

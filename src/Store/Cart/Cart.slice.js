@@ -13,11 +13,12 @@ export const cartSlice = createSlice({
       state.cart.push(action.payload);
     },
     updateProductInCart(state, action) {
-      let productIndex = state.cart.find((p) => p.id == action.payload.id);
-      if (productIndex) {
-        state.cart[productIndex] = action.payload;
-        return;
-      }
+      return {
+        cart: state.cart.map((item) => {
+          if (item.id == action.payload.id) return action.payload;
+          return item;
+        }),
+      };
     },
   },
 });

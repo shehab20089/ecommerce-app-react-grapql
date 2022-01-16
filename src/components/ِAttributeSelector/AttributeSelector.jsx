@@ -10,18 +10,18 @@ import {
 export default class AttributeSelector extends Component {
   constructor(props) {
     super(props);
-    this.state = { selectedAttribute: "" };
+    this.state = { selectedAttribute: this.props.attribute.selectedItem };
   }
   handleItemChange = (item) => {
     this.setState({ selectedAttribute: item });
-    this.props.onAttributeChange(item);
+    this.props.onAttributeChange(item, this.props.attribute.id);
   };
   render() {
-    const { id, name, items, type } = this.props.attribute;
+    const { name, items, type } = this.props.attribute;
     const { selectedAttribute } = this.state;
 
     return (
-      <AttributeContainer key={id}>
+      <AttributeContainer>
         <AttributeTitle>{name}:</AttributeTitle>
 
         <AttributeSelection>
