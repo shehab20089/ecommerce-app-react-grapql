@@ -14,10 +14,15 @@ export const cartSlice = createSlice({
     },
     updateProductInCart(state, action) {
       return {
-        cart: state.cart.map((item) => {
-          if (item.id == action.payload.id) return action.payload;
-          return item;
-        }),
+        cart: state.cart
+          .map((item) => {
+            if (item.id == action.payload.id) {
+              if (action.payload.quantity < 1) return "deleted";
+              return action.payload;
+            }
+            return item;
+          })
+          .filter((item) => item != "deleted"),
       };
     },
   },

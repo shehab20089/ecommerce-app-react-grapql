@@ -1,6 +1,6 @@
 import { Routes, Route, useParams } from "react-router-dom";
 import { BaseLayout } from "../layouts";
-import { ProductsListPage, ProductPage } from "../pages";
+import { ProductsListPage, ProductPage, CartPage } from "../pages";
 import React, { Component } from "react";
 
 export default class PageRoutes extends Component {
@@ -10,6 +10,7 @@ export default class PageRoutes extends Component {
         <Route path="/" element={<BaseLayout />}>
           <Route index element={<ProductsListPage />} />
           <Route path="product/:id" element={<ProductPage />} />
+          <Route path="cart/" element={<CartPage />} />
         </Route>
       </Routes>
     );
