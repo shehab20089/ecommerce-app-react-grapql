@@ -41,14 +41,15 @@ export default class CartItem extends Component {
   render() {
     const { brand, name, currentPrice, attributes, quantity, gallery } =
       this.props.product;
+    const { size } = this.props;
     return (
-      <CartItemsContainer>
+      <CartItemsContainer size={size}>
         <CartItemInfoCol1>
           <CartItemHeader>
-            <CartItemBrand>{brand}</CartItemBrand>
-            <CartItemName>{name}</CartItemName>
+            <CartItemBrand size={size}>{brand}</CartItemBrand>
+            <CartItemName size={size}>{name}</CartItemName>
           </CartItemHeader>
-          <CartItemPrice>
+          <CartItemPrice size={size}>
             {currentPrice.currency.symbol}
             &nbsp;
             {Number.parseFloat(currentPrice.amount * quantity).toFixed(2)}
@@ -56,6 +57,7 @@ export default class CartItem extends Component {
           <CartItemOptionsContainer>
             {attributes.map((attribute) => (
               <AttributeSelector
+                size={size}
                 key={attribute.name}
                 onAttributeChange={this.handleAttributeChange}
                 attribute={attribute}
@@ -64,17 +66,26 @@ export default class CartItem extends Component {
           </CartItemOptionsContainer>
         </CartItemInfoCol1>
         <CartItemInfoCol2>
-          <CartItemQuantityContainer>
+          <CartItemQuantityContainer size={size}>
             <QuantityButton
               onClick={() => this.handleQuantityChange("+")}
-              size={{ height: "45px", width: "45px" }}
+              size={{
+                height: size != "mini" ? "45px" : "24px",
+                width: size != "mini" ? "45px" : "24px",
+                fontSize: size != "mini" ? "2.5rem" : "1.3rem",
+              }}
             >
               +
             </QuantityButton>
-            <QuantityAmount>{quantity}</QuantityAmount>
+            <QuantityAmount size={size}>{quantity}</QuantityAmount>
             <QuantityButton
               onClick={() => this.handleQuantityChange("-")}
-              size={{ height: "45px", width: "45px" }}
+              size={{
+                height: size != "mini" ? "45px" : "24px",
+                width: size != "mini" ? "45px" : "24px",
+                fontSize: size != "mini" ? "2.5rem" : "1.3rem",
+                mode: size,
+              }}
             >
               -
             </QuantityButton>

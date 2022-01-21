@@ -1,9 +1,12 @@
 import styled from "styled-components";
 export const CartItemsContainer = styled.div`
-  border-top: 1px solid #e5e5e5;
-  width: 88.8%;
+  border-top: ${({ size }) => (size != "mini" ? " 1px solid #e5e5e5" : "none")};
+
+  width: ${({ size }) => (size != "mini" ? "88.8%" : "100%")};
   display: flex;
   justify-content: space-between;
+
+  overflow: hidden;
   align-items: center;
   padding-top: 20px;
 `;
@@ -14,22 +17,23 @@ export const CartItemInfoCol1 = styled.div`
 `;
 export const CartItemInfoCol2 = styled.div`
   display: flex;
+  align-items: center;
   gap: 12px;
 `;
 
 export const CartItemHeader = styled.div``;
 export const CartItemBrand = styled.h2`
-  font-weight: 600;
-  font-size: 1.7rem;
+  font-weight: ${({ size }) => (size != "mini" ? "600" : "300")};
+  font-size: ${({ size }) => (size != "mini" ? "1.7rem" : "0.9rem")};
 `;
 export const CartItemName = styled.h3`
-  font-weight: 400;
-  font-size: 1.7rem;
+  font-weight: ${({ size }) => (size != "mini" ? "400 " : "300")};
+  font-size: ${({ size }) => (size != "mini" ? "1.7rem" : "0.9rem")}; ;
 `;
 
 export const CartItemPrice = styled.h3`
-  font-weight: 700;
-  font-size: 1.35rem;
+  font-weight: ${({ size }) => (size != "mini" ? "700 " : "500")};
+  font-size: ${({ size }) => (size != "mini" ? "1.35rem" : "0.9rem")};
 `;
 export const CartItemOptionsContainer = styled.div`
   display: flex;
@@ -42,9 +46,14 @@ export const CartItemQuantityContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 185px;
+  height: ${({ size }) => (size != "mini" ? "185px" : "137px")};
 `;
 export const QuantityButton = styled.div`
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
   border: 1px solid #1d1f22;
   height: ${({ size }) => size.height};
   width: ${({ size }) => size.width};
@@ -52,7 +61,7 @@ export const QuantityButton = styled.div`
   justify-content: center;
   align-items: center;
   font-weight: 100;
-  font-size: 2.5rem;
+  font-size: ${({ size }) => size.fontSize};
   cursor: pointer;
   &:hover {
     opacity: 0.5;
@@ -60,7 +69,6 @@ export const QuantityButton = styled.div`
 `;
 
 export const QuantityAmount = styled.div`
-  font-weight: 500;
-
-  font-size: 1.35rem;
+  font-weight: ${({ size }) => (size != "mini" ? "500" : "300")};
+  font-size: ${({ size }) => (size != "mini" ? "1.35rem" : "0.9rem")};
 `;
