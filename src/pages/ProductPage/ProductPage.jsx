@@ -9,6 +9,8 @@ import {
   ProductPagePriceTitle,
   ProductPagePriceValue,
   ProductPageDescription,
+  QuantityBtn,
+  QuantityContainer,
 } from "./ProductPage.styles";
 import ImageGallery from "../../components/ImageGallery/ImageGallery";
 import { BaseButton } from "../../components/Base";
@@ -61,6 +63,17 @@ class ProductsPage extends Component {
     cartProduct.quantity = 1;
     this.props.addItemToCart(cartProduct);
   };
+  handleQuantityChange(operation) {
+    const updatedQuantity =
+      operation == "+"
+        ? this.state.cartObject.quantity + 1
+        : this.state.cartObject.quantity - 1;
+    const updatedProduct = JSON.parse(JSON.stringify(this.state.cartObject));
+    updatedProduct.quantity = updatedQuantity;
+    console.log(this.state.cartObject);
+    this.setState({ cartObject: updatedProduct });
+    this.props.updateProductInCart(updatedProduct);
+  }
   render() {
     const { name, brand, gallery, attributes, currentPrice, description } =
       this.props.currentProduct;
@@ -91,7 +104,29 @@ class ProductsPage extends Component {
             ) : null}
           </ProductPagePriceContainer>
           {this.props.cartData.id ? (
-            "Already in Cart"
+            <QuantityContainer>
+              <QuantityBtn
+                onClick={() => this.handleQuantityChange("+")}
+                size={{
+                  height: "30px",
+                  width: "30px",
+                  fontSize: "1.5rem",
+                }}
+              >
+                +
+              </QuantityBtn>
+              {this.props.cartData.quantity}
+              <QuantityBtn
+                onClick={() => this.handleQuantityChange("-")}
+                size={{
+                  height: "30px",
+                  width: "30px",
+                  fontSize: "1.5rem",
+                }}
+              >
+                -
+              </QuantityBtn>
+            </QuantityContainer>
           ) : (
             <BaseButton
               onClick={this.handleAddToCart}

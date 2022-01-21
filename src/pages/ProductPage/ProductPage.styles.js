@@ -39,5 +39,31 @@ export const ProductPagePriceValue = styled.p`
   font-size: 1.335rem;
   line-height: 2;
 `;
+export const QuantityContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+`;
+
+export const QuantityBtn = styled.div`
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  border: 1px solid #1d1f22;
+  height: ${({ size }) => size.height};
+  width: ${({ size }) => size.width};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 100;
+  font-size: ${({ size }) => size.fontSize};
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
+`;
 
 export const ProductPageDescription = styled.div``;
