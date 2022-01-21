@@ -17,11 +17,10 @@ class CartPage extends Component {
   };
   render() {
     const { cartProducts } = this.props;
-    console.log(cartProducts);
 
     return (
       <CartPageContainer>
-        <CartPageTitle>Cart</CartPageTitle>
+        <CartPageTitle>Cart </CartPageTitle>
         <CartItemsContainer>
           {cartProducts.map((product) => (
             <CartItem
