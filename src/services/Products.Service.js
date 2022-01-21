@@ -4,8 +4,8 @@ import { gql } from "@apollo/client";
 function getProductsByCategory(category) {
   return client.query({
     query: gql`
-      query GetProducts {
-        category(input:{title:"${category}"}) {
+      query GetProducts($categoryName: String!) {
+        category(input: { title: $categoryName }) {
           name
           products {
             id
@@ -16,52 +16,55 @@ function getProductsByCategory(category) {
             prices {
               amount
               currency {
-                    label
-                    symbol
-                       }
-                   }
+                label
+                symbol
+              }
+            }
           }
         }
       }
     `,
+    variables: {
+      categoryName: category,
+    },
   });
 }
 function getProductsById(productId) {
   return client.query({
     query: gql`
-      query GetProduct {
-       
-          product(id:"${productId}") {       
-            id
+      query GetProduct($productId: String!) {
+        product(id: $productId) {
+          id
           name
           brand
           inStock
-          gallery         
+          gallery
           description
           category
-          attributes
-          {
+          attributes {
             id
             name
             type
-            items{
+            items {
               displayValue
               value
               id
             }
-          }  
-          prices{
-          amount
-          currency{
-          label
-          symbol
           }
-          }   
+          prices {
+            amount
+            currency {
+              label
+              symbol
+            }
           }
-       
+        }
       }
     `,
     fetchPolicy: "no-cache",
+    variables: {
+      productId: productId,
+    },
   });
 }
 
