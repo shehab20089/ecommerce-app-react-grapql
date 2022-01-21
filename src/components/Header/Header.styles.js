@@ -151,7 +151,7 @@ export const CartDropDownContainer = styled.div`
   animation: ${dropdownFade} 0.3s linear;
   box-shadow: 0px 4px 35px 0px hsla(210, 5%, 67%, 0.19);
   width: 400px;
-  max-height: 540px;
+  max-height: 80vh;
   overflow: auto;
   scroll-behavior: smooth;
   background: white;

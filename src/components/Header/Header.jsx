@@ -77,7 +77,10 @@ class Header extends Component {
 
     return (
       <>
-        <PageOverlay showOverlay={this.state.showOverlay}></PageOverlay>
+        <PageOverlay
+          onClick={this.handleShowOverLay}
+          showOverlay={this.state.showOverlay}
+        ></PageOverlay>
         <StyledHeader>
           <MenuList>
             {categories.map((category) => {
@@ -151,7 +154,7 @@ class Header extends Component {
                   </TotalPriceAmount>
                 </TotalPriceContainer>
                 <CartDropdownActions>
-                  <Link to="/cart">
+                  <Link to="/cart" onClick={this.handleShowOverLay}>
                     <BaseButton
                       border="1px solid #1D1F22;"
                       color="black"
@@ -189,7 +192,10 @@ const mapStateToProps = (state) => {
   });
   return {
     categories: state.categories,
-    numberOfItemsInCart: state.cart.cart.length,
+    numberOfItemsInCart: state.cart.cart.reduce(
+      (sum, cartItem) => sum + cartItem.quantity,
+      0
+    ),
     currencies: state.currencies,
     cartProducts: products,
     totalAmount: products.reduce((prev, current) => {

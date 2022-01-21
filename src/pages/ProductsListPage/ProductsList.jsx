@@ -8,6 +8,10 @@ import { fetchProductsByCategoryAsync } from "../../Store/Products/Products.slic
 import { connect } from "react-redux";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { Link } from "react-router-dom";
+import {
+  addItemToCart,
+  updateProductInCart,
+} from "../../Store/Cart/Cart.slice";
 
 class ProductsList extends Component {
   componentDidUpdate(prevProps) {
@@ -17,6 +21,14 @@ class ProductsList extends Component {
   componentDidMount() {
     this.props.fetchProductsByCategoryAsync(this.props.title);
   }
+  handleProductUpdate = (updatedProduct) => {
+    this.props.updateProductInCart(updatedProduct);
+  };
+  handleAddToCart = (product) => {
+    const cartProduct = JSON.parse(JSON.stringify(product));
+    cartProduct.quantity = 1;
+    this.props.addItemToCart(cartProduct);
+  };
 
   render() {
     const { title, productsList } = this.props;
@@ -27,7 +39,11 @@ class ProductsList extends Component {
         <ProductsListContainer>
           {productsList.map((p) => (
             <Link to={`product/${p.id}`} key={p.id}>
-              <ProductCard product={p}></ProductCard>
+              <ProductCard
+                onProductChange={this.handleProductUpdate}
+                onAddClicked={this.handleAddToCart}
+                product={p}
+              ></ProductCard>
             </Link>
           ))}
         </ProductsListContainer>
@@ -44,8 +60,31 @@ const mapStateToProps = (state) => ({
     mappedProduct.currentPrice = mappedProduct.prices.find((price) => {
       return price.currency.symbol == state.currencies.selectedCurrency.symbol;
     });
+    const productInCart = state.cart.cart.find(
+      (item) => item.id == mappedProduct.id
+    );
+    const isItemInCart = productInCart ? true : false;
+    mappedProduct.isInCart = isItemInCart;
+    if (isItemInCart) mappedProduct.quantity = productInCart.quantity;
+    if (mappedProduct.attributes) {
+      mappedProduct.attributes = mappedProduct.attributes.map(
+        (attribute, index) => {
+          const newAttribute = { ...attribute };
+
+          newAttribute.selectedItem = !isItemInCart
+            ? attribute.items[0]
+            : productInCart.attributes[index].selectedItem;
+          return newAttribute;
+        }
+      );
+    }
     return mappedProduct;
   }),
 });
-const mapDispatchToProps = { fetchProductsByCategoryAsync };
+
+const mapDispatchToProps = {
+  fetchProductsByCategoryAsync,
+  updateProductInCart,
+  addItemToCart,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(ProductsList);

@@ -3,6 +3,7 @@ import styled from "styled-components/macro";
 export const ProductPageContainer = styled.main`
   margin: 0 auto;
   max-width: 1238px;
+  padding-bottom: 10%;
 `;
 
 export const CategoryTitle = styled.h1`

@@ -13,6 +13,16 @@ function getProductsByCategory(category) {
             brand
             inStock
             gallery
+            attributes {
+              id
+              name
+              type
+              items {
+                displayValue
+                value
+                id
+              }
+            }
             prices {
               amount
               currency {
@@ -24,6 +34,7 @@ function getProductsByCategory(category) {
         }
       }
     `,
+    fetchPolicy: "no-cache",
     variables: {
       categoryName: category,
     },

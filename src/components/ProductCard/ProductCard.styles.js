@@ -5,9 +5,25 @@ export const ProductCardActions = styled.div`
   position: absolute;
   top: -2.75rem;
   right: 0.835rem;
-  width: 20%;
+  width: 100%;
   display: none;
   animation: ${Fade} 0.3s linear;
+`;
+export const AttributesOverlay = styled.div`
+  position: absolute;
+  z-index: 0;
+  top: -50px;
+  right: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: white;
+  margin: 0 auto;
+  width: 70%;
+  opacity: 0;
+  z-index: -5;
+  padding: 0.9rem;
+  box-shadow: 0px 4px 35px 0px hsla(210, 5%, 67%, 0.19);
 `;
 export const ProductCardCartBtn = styled.div`
   margin-left: auto;
@@ -18,9 +34,15 @@ export const ProductCardCartBtn = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
+
+  &:hover ${AttributesOverlay} {
+    opacity: 1;
+    z-index: 2;
+  }
 `;
 
 export const ProductCardContainer = styled.div`
+  position: relative;
   padding: 0.9rem;
   cursor: pointer;
   &:hover {
@@ -49,4 +71,34 @@ export const ProductCardTitle = styled.h2`
 `;
 export const ProductCardPrice = styled.p`
   font-weight: 500;
+`;
+
+export const OverlayTitle = styled.div`
+  font-size: 1rem;
+`;
+export const QuantityContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+`;
+
+export const QuantityBtn = styled.div`
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  border: 1px solid #1d1f22;
+  height: ${({ size }) => size.height};
+  width: ${({ size }) => size.width};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 100;
+  font-size: ${({ size }) => size.fontSize};
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
 `;
