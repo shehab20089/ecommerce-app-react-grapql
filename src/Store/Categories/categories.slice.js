@@ -4,13 +4,11 @@ import { CategoriesService } from "../../services";
 const initialState = {
   categories: [],
   selectedCategory: "",
-  status: "idle",
 };
 
 export const categoriesSlice = createSlice({
   name: "categories",
   initialState,
-  // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
     selectCategory: (state, action) => {
       state.selectedCategory = action.payload;
@@ -19,11 +17,8 @@ export const categoriesSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCategoriesAsync.pending, (state) => {
-        state.status = "loading";
-      })
+      .addCase(fetchCategoriesAsync.pending, (state) => {})
       .addCase(fetchCategoriesAsync.fulfilled, (state, action) => {
-        state.status = "idle";
         state.categories = action.payload;
         state.selectedCategory = action.payload ? action.payload[0].name : "";
       });

@@ -7,6 +7,7 @@ export default class PageRoutes extends Component {
   render() {
     return (
       <Routes>
+        {/* adding basic layout to the child pages */}
         <Route path="/" element={<BaseLayout />}>
           <Route index element={<ProductsListPage />} />
           <Route path="product/:id" element={<ProductPage />} />

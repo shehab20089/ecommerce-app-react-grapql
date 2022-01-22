@@ -9,10 +9,7 @@ import { updateProductInCart } from "../../Store/Cart/Cart.slice";
 import CartItem from "../../components/CartItem/CartItem";
 
 class CartPage extends Component {
-  handleAttributeChange = (updatedProduct) => {
-    this.props.updateProductInCart(updatedProduct);
-  };
-  handleQuantityChange = (updatedProduct) => {
+  handleProductChanges = (updatedProduct) => {
     this.props.updateProductInCart(updatedProduct);
   };
   render() {
@@ -26,8 +23,7 @@ class CartPage extends Component {
             <CartItem
               key={product.id}
               product={product}
-              onAttributeChanged={this.handleAttributeChange}
-              onQuantityChanges={this.handleQuantityChange}
+              onCartProductChanges={this.handleProductChanges}
             ></CartItem>
           ))}
         </CartItemsContainer>

@@ -68,10 +68,7 @@ class Header extends Component {
   handleNavChange = (activeLink) => {
     this.props.selectCategory(activeLink);
   };
-  handleAttributeChange = (updatedProduct) => {
-    this.props.updateProductInCart(updatedProduct);
-  };
-  handleQuantityChange = (updatedProduct) => {
+  handleProductChanges = (updatedProduct) => {
     this.props.updateProductInCart(updatedProduct);
   };
 
@@ -149,8 +146,7 @@ class Header extends Component {
                       key={product.id}
                       size="mini"
                       product={product}
-                      onAttributeChanged={this.handleAttributeChange}
-                      onQuantityChanges={this.handleQuantityChange}
+                      onCartProductChanges={this.handleProductChanges}
                     ></CartItem>
                   ))}
                 </CartProductsContainer>
@@ -191,6 +187,7 @@ Header.propTypes = {
 const mapStateToProps = (state) => {
   const products = state.cart.cart.map((product) => {
     const mappedProduct = JSON.parse(JSON.stringify(product));
+    // adding custom property currentPrice which change with the currency change
     mappedProduct.currentPrice = mappedProduct.prices.find((price) => {
       return price.currency.symbol == state.currencies.selectedCurrency.symbol;
     });

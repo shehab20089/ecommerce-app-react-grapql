@@ -36,6 +36,8 @@ a {
   color: inherit;
 }
 
+/* change scroll bar style */
+
 ::-webkit-scrollbar {
   width: 8px;
 }

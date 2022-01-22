@@ -25,10 +25,9 @@ export default class CartItem extends Component {
       (a) => a.id == attributeId
     );
     updatedProduct.attributes[attributeIndex].selectedItem = item;
-
-    this.props.onAttributeChanged(updatedProduct);
+    this.props.onCartProductChanges(updatedProduct);
   };
-  handleQuantityChange(operation) {
+  handleQuantityChange = (operation) => {
     const updatedQuantity =
       operation == "+"
         ? this.props.product.quantity + 1
@@ -36,8 +35,8 @@ export default class CartItem extends Component {
     const updatedProduct = JSON.parse(JSON.stringify(this.props.product));
     updatedProduct.quantity = updatedQuantity;
 
-    this.props.onQuantityChanges(updatedProduct);
-  }
+    this.props.onCartProductChanges(updatedProduct);
+  };
   render() {
     const { brand, name, currentPrice, attributes, quantity, gallery } =
       this.props.product;

@@ -35,6 +35,7 @@ function getProductsByCategory(category) {
         }
       }
     `,
+    // to fix attribute size issue coming wrong
     fetchPolicy: "no-cache",
     variables: {
       categoryName: category,
@@ -73,6 +74,7 @@ function getProductsById(productId) {
         }
       }
     `,
+    // to fix attribute size issue coming wrong
     fetchPolicy: "no-cache",
     variables: {
       productId: productId,

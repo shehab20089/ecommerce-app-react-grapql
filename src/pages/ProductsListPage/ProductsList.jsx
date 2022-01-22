@@ -61,11 +61,13 @@ const mapStateToProps = (state) => ({
     mappedProduct.currentPrice = mappedProduct.prices.find((price) => {
       return price.currency.symbol == state.currencies.selectedCurrency.symbol;
     });
+    // check product in cart
     const productInCart = state.cart.cart.find(
       (item) => item.id == mappedProduct.id
     );
     const isItemInCart = productInCart ? true : false;
     mappedProduct.isInCart = isItemInCart;
+    // if in cart add quantity and attribute properties
     if (isItemInCart) mappedProduct.quantity = productInCart.quantity;
     if (mappedProduct.attributes) {
       mappedProduct.attributes = mappedProduct.attributes.map(

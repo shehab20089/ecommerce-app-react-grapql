@@ -12,6 +12,7 @@ export default class AttributeSelector extends Component {
     super(props);
     this.state = { selectedAttribute: this.props.attribute.selectedItem };
   }
+  // check props changes
   componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.attribute.selectedItem.id !==
