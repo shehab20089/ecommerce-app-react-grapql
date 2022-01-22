@@ -143,7 +143,6 @@ export default class ProductCard extends Component {
               {currentPrice.amount}
             </ProductCardPrice>
           ) : null}
-          ;
         </ProductCardDescription>
       </ProductCardContainer>
     );
