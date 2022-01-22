@@ -22,8 +22,8 @@ import {
   TotalPriceAmount,
   IconBadge,
 } from "./Header.styles";
-import downArrowIcon from "../../assets/images/Vector.svg";
-import cartIcon from "../../assets/images/EmptyCart.svg";
+import downArrowIcon from "../../assets/icons/downArrow.svg";
+import cartIcon from "../../assets/icons/EmptyCart.svg";
 import {
   fetchCategoriesAsync,
   selectCategory,

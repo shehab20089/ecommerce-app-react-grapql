@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components/macro";
-import logo from "../../assets/images/a-logo.png";
+import logo from "../../assets/logo/a-logo.png";
 
 const dropdownFade = keyframes`
   from {

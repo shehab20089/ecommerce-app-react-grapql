@@ -14,7 +14,7 @@ import {
 } from "./ProductCard.styles";
 import PropTypes from "prop-types";
 import { BaseButton, Icon } from "../Base";
-import cartIcon from "../../assets/images/whiteCartIcon.svg";
+import cartIcon from "../../assets/icons/whiteCartIcon.svg";
 import AttributeSelector from "../ِAttributeSelector/AttributeSelector";
 
 export default class ProductCard extends Component {
