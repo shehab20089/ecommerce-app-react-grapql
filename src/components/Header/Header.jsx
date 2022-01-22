@@ -189,7 +189,6 @@ Header.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
   const products = state.cart.cart.map((product) => {
     const mappedProduct = JSON.parse(JSON.stringify(product));
     mappedProduct.currentPrice = mappedProduct.prices.find((price) => {

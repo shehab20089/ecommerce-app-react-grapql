@@ -27,7 +27,6 @@ export const cartSlice = createSlice({
           return item;
         })
         .filter((item) => item != "deleted");
-      console.log(mappedCart);
       ProductsService.saveCartProducts(mappedCart);
 
       return {
