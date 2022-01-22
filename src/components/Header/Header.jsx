@@ -90,7 +90,9 @@ class Header extends Component {
                   key={category.name}
                   onClick={() => this.handleNavChange(category.name)}
                 >
-                  <MenuListItemLink>{category.name}</MenuListItemLink>
+                  <Link to="/">
+                    <MenuListItemLink>{category.name}</MenuListItemLink>
+                  </Link>
                 </MenuListItem>
               );
             })}
