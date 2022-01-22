@@ -1,5 +1,6 @@
 import styled, { keyframes } from "styled-components/macro";
 import logo from "../../assets/logo/a-logo.png";
+import { Fade } from "../Base";
 
 const dropdownFade = keyframes`
   from {
@@ -159,7 +160,7 @@ export const CartDropDownContainer = styled.div`
 `;
 export const PageOverlay = styled.div`
   display: ${({ showOverlay }) => (showOverlay ? "block" : "none")};
-
+  animation: ${Fade} 0.3s linear;
   position: absolute;
   left: 0;
   top: 80px;
