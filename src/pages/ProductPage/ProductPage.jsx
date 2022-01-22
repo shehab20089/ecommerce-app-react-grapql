@@ -11,6 +11,7 @@ import {
   ProductPageDescription,
   QuantityBtn,
   QuantityContainer,
+  ProductPageErrorTitle,
 } from "./ProductPage.styles";
 import ImageGallery from "../../components/ImageGallery/ImageGallery";
 import { BaseButton } from "../../components/Base";
@@ -74,6 +75,51 @@ class ProductsPage extends Component {
     this.setState({ cartObject: updatedProduct });
     this.props.updateProductInCart(updatedProduct);
   }
+  renderInStock = () => {
+    const inStock = this.props.currentProduct.inStock;
+    if (!inStock)
+      return (
+        <ProductPageErrorTitle>Product is out of stock</ProductPageErrorTitle>
+      );
+    else {
+      if (this.props.cartData.id) {
+        return (
+          <QuantityContainer>
+            <QuantityBtn
+              onClick={() => this.handleQuantityChange("+")}
+              size={{
+                height: "30px",
+                width: "30px",
+                fontSize: "1.5rem",
+              }}
+            >
+              +
+            </QuantityBtn>
+            {this.props.cartData.quantity}
+            <QuantityBtn
+              onClick={() => this.handleQuantityChange("-")}
+              size={{
+                height: "30px",
+                width: "30px",
+                fontSize: "1.5rem",
+              }}
+            >
+              -
+            </QuantityBtn>
+          </QuantityContainer>
+        );
+      }
+    }
+
+    return (
+      <BaseButton
+        onClick={this.handleAddToCart}
+        size={{ height: "52px", font: "0.9rem" }}
+      >
+        Add to card
+      </BaseButton>
+    );
+  };
   render() {
     const { name, brand, gallery, attributes, currentPrice, description } =
       this.props.currentProduct;
@@ -103,38 +149,8 @@ class ProductsPage extends Component {
               </ProductPagePriceValue>
             ) : null}
           </ProductPagePriceContainer>
-          {this.props.cartData.id ? (
-            <QuantityContainer>
-              <QuantityBtn
-                onClick={() => this.handleQuantityChange("+")}
-                size={{
-                  height: "30px",
-                  width: "30px",
-                  fontSize: "1.5rem",
-                }}
-              >
-                +
-              </QuantityBtn>
-              {this.props.cartData.quantity}
-              <QuantityBtn
-                onClick={() => this.handleQuantityChange("-")}
-                size={{
-                  height: "30px",
-                  width: "30px",
-                  fontSize: "1.5rem",
-                }}
-              >
-                -
-              </QuantityBtn>
-            </QuantityContainer>
-          ) : (
-            <BaseButton
-              onClick={this.handleAddToCart}
-              size={{ height: "52px", font: "0.9rem" }}
-            >
-              Add to card
-            </BaseButton>
-          )}
+
+          {this.renderInStock()}
 
           <ProductPageDescription
             dangerouslySetInnerHTML={{ __html: description }}

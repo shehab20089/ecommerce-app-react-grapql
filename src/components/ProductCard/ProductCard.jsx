@@ -64,14 +64,27 @@ export default class ProductCard extends Component {
   }
 
   render() {
-    const { name, currentPrice, gallery, attributes, isInCart, quantity } =
-      this.props.product;
+    const {
+      name,
+      currentPrice,
+      gallery,
+      attributes,
+      isInCart,
+      quantity,
+      inStock,
+    } = this.props.product;
     return (
-      <ProductCardContainer>
-        <ProductCardAvatar src={gallery[0]}></ProductCardAvatar>
+      <ProductCardContainer isInStock={inStock}>
+        <ProductCardAvatar
+          isInStock={inStock}
+          src={gallery[0]}
+        ></ProductCardAvatar>
         <ProductCardDescription>
           <ProductCardActions>
-            <ProductCardCartBtn onClick={this.stopAttributePropagation}>
+            <ProductCardCartBtn
+              isInStock={inStock}
+              onClick={this.stopAttributePropagation}
+            >
               <AttributesOverlay>
                 <OverlayTitle>{name}</OverlayTitle>
                 {attributes.map((attribute) => {

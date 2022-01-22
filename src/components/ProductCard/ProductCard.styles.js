@@ -27,14 +27,13 @@ export const AttributesOverlay = styled.div`
 `;
 export const ProductCardCartBtn = styled.div`
   margin-left: auto;
-  display: flex;
+  display: ${({ isInStock }) => (isInStock ? "flex" : "none")};
   justify-content: center;
   align-items: center;
   background: var(--clr-primary);
   width: 50px;
   height: 50px;
   border-radius: 50%;
-
   &:hover ${AttributesOverlay} {
     opacity: 1;
     z-index: 2;
@@ -43,6 +42,7 @@ export const ProductCardCartBtn = styled.div`
 
 export const ProductCardContainer = styled.div`
   position: relative;
+  opacity: ${({ isInStock }) => (isInStock ? 1 : 0.5)};
   padding: 0.9rem;
   cursor: pointer;
   &:hover {
@@ -54,11 +54,25 @@ export const ProductCardContainer = styled.div`
 `;
 
 export const ProductCardAvatar = styled.div`
+  position: relative;
   height: 354px;
   background: url(${({ src }) => src});
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  &::before {
+    content: ${({ isInStock }) => (isInStock ? "none" : "'out of stock'")};
+    position: absolute;
+    text-transform: uppercase;
+    font-size: 1.34rem;
+    color: #8d8f9a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    /* background: red; */
+  }
 `;
 export const ProductCardDescription = styled.div`
   margin-top: 1.3334rem;

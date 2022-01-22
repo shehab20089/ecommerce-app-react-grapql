@@ -67,3 +67,7 @@ export const QuantityBtn = styled.div`
 `;
 
 export const ProductPageDescription = styled.div``;
+export const ProductPageErrorTitle = styled.div`
+  color: #fc2222;
+  font-size: 1.3rem;
+`;
