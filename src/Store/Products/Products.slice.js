@@ -29,9 +29,6 @@ export const productsSlice = createSlice({
     builder.addCase(fetchProductByIdAsync.fulfilled, (state, action) => {
       state.selectedProduct = action.payload;
     });
-    builder.addCase(fetchProductByIdAsync.rejected, (state, action) => {
-      console.log(action.payload);
-    });
   },
 });
 

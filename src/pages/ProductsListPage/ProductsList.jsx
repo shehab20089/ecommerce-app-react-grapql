@@ -19,7 +19,8 @@ class ProductsList extends Component {
       this.props.fetchProductsByCategoryAsync(this.props.title);
   }
   componentDidMount() {
-    this.props.fetchProductsByCategoryAsync(this.props.title);
+    if (this.props.title)
+      this.props.fetchProductsByCategoryAsync(this.props.title);
   }
   handleProductUpdate = (updatedProduct) => {
     this.props.updateProductInCart(updatedProduct);

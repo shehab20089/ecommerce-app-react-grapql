@@ -32,21 +32,26 @@ import {
   fetchCurrenciesAsync,
   changeCurrency,
 } from "../../Store/Currency/Currency.slice";
-import { updateProductInCart } from "../../Store/Cart/Cart.slice";
+import { fetchCart, updateProductInCart } from "../../Store/Cart/Cart.slice";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import CartItem from "../CartItem/CartItem";
 import { BaseButton } from "../Base";
+import { localStorageConstants } from "../../constants";
 
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = { showOverlay: false };
   }
-  componentDidMount() {
-    this.props.fetchCategoriesAsync();
-    this.props.fetchCurrenciesAsync();
+  async componentDidMount() {
+    await this.props.fetchCategoriesAsync();
+    await this.props.fetchCurrenciesAsync();
+    const cartItems = JSON.parse(
+      localStorage.getItem(localStorageConstants.CART_PRODUCTS)
+    );
+    if (cartItems) this.props.fetchCart(cartItems);
   }
   handleShowOverLay = () => {
     if (!this.state.showOverlay) {
@@ -172,7 +177,6 @@ class Header extends Component {
                 </CartDropdownActions>
               </CartDropDownContainer>
             </OverLayContainer>
-            {/* </Link>  */}
           </ActionsContainer>
         </StyledHeader>
       </>
@@ -185,6 +189,7 @@ Header.propTypes = {
 };
 
 const mapStateToProps = (state) => {
+  console.log(state);
   const products = state.cart.cart.map((product) => {
     const mappedProduct = JSON.parse(JSON.stringify(product));
     mappedProduct.currentPrice = mappedProduct.prices.find((price) => {
@@ -211,6 +216,7 @@ const mapDispatchToProps = {
   fetchCategoriesAsync,
   changeCurrency,
   fetchCurrenciesAsync,
+  fetchCart,
   updateProductInCart,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

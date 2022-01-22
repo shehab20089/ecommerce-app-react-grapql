@@ -47,7 +47,7 @@ export const MenuListItem = styled.li`
   }
 `;
 
-export const MenuListItemLink = styled.a`
+export const MenuListItemLink = styled.div`
   text-transform: uppercase;
   font-weight: 600;
   font-size: 0.9rem;

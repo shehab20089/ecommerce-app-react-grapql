@@ -1,5 +1,6 @@
 import { client } from "./api";
 import { gql } from "@apollo/client";
+import { localStorageConstants } from "../constants";
 
 function getProductsByCategory(category) {
   return client.query({
@@ -79,7 +80,15 @@ function getProductsById(productId) {
   });
 }
 
+function saveCartProducts(cart) {
+  localStorage.setItem(
+    localStorageConstants.CART_PRODUCTS,
+    JSON.stringify(cart)
+  );
+}
+
 export const ProductsService = {
   getProductsByCategory,
   getProductsById,
+  saveCartProducts,
 };

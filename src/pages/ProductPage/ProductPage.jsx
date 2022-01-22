@@ -71,7 +71,6 @@ class ProductsPage extends Component {
         : this.state.cartObject.quantity - 1;
     const updatedProduct = JSON.parse(JSON.stringify(this.state.cartObject));
     updatedProduct.quantity = updatedQuantity;
-    console.log(this.state.cartObject);
     this.setState({ cartObject: updatedProduct });
     this.props.updateProductInCart(updatedProduct);
   }

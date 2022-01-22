@@ -42,7 +42,6 @@ export default class ProductCard extends Component {
       (a) => a.id == attributeId
     );
     updatedProduct.attributes[attributeIndex].selectedItem = item;
-    console.log(updatedProduct);
     this.setState({ currentProduct: updatedProduct });
     this.props.onProductChange(updatedProduct);
   };
@@ -58,7 +57,6 @@ export default class ProductCard extends Component {
       JSON.stringify(this.state.currentProduct)
     );
     updatedProduct.quantity = updatedQuantity;
-    console.log(this.state.currentProduct);
     this.setState({ currentProduct: updatedProduct });
     this.props.onProductChange(updatedProduct);
   }
@@ -138,11 +136,14 @@ export default class ProductCard extends Component {
             </ProductCardCartBtn>
           </ProductCardActions>
           <ProductCardTitle>{name}</ProductCardTitle>
-          <ProductCardPrice>
-            {currentPrice.currency.symbol}
-            &nbsp;
-            {currentPrice.amount}
-          </ProductCardPrice>
+          {currentPrice ? (
+            <ProductCardPrice>
+              {currentPrice.currency.symbol}
+              &nbsp;
+              {currentPrice.amount}
+            </ProductCardPrice>
+          ) : null}
+          ;
         </ProductCardDescription>
       </ProductCardContainer>
     );
