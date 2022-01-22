@@ -48,6 +48,17 @@ class ProductsPage extends Component {
         cartObject: JSON.parse(JSON.stringify(this.props.currentProduct)),
       });
   }
+  componentDidUpdate(preProps) {
+    if (
+      JSON.stringify(preProps.currentProduct) !=
+      JSON.stringify(this.props.currentProduct)
+    ) {
+      this.setState({
+        // deep copy
+        cartObject: JSON.parse(JSON.stringify(this.props.currentProduct)),
+      });
+    }
+  }
   componentWillUnmount() {
     this.props.restSelectedProducts();
   }
@@ -64,7 +75,7 @@ class ProductsPage extends Component {
     this.props.updateProductInCart(updatedProduct);
   };
   handleAddToCart = () => {
-    const cartProduct = this.state.cartObject;
+    const cartProduct = JSON.parse(JSON.stringify(this.state.cartObject));
     cartProduct.quantity = 1;
     this.props.addItemToCart(cartProduct);
   };
@@ -178,7 +189,7 @@ const mapStateToProps = (state) => {
     (item) => item.id == mappedProduct.id
   );
   const isItemInCart = productInCart ? true : false;
-
+  if (isItemInCart) mappedProduct.quantity = productInCart.quantity;
   if (currentProduct.attributes) {
     mappedProduct.attributes = mappedProduct.attributes.map(
       (attribute, index) => {
@@ -195,6 +206,7 @@ const mapStateToProps = (state) => {
   return {
     currentProduct: mappedProduct,
     cartData: isItemInCart ? productInCart : {},
+    isItemInCart: isItemInCart,
   };
 };
 const mapDispatchToProps = {
