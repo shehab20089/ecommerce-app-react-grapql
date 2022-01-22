@@ -26,6 +26,7 @@ import {
 } from "../../Store/Cart/Cart.slice";
 import { connect } from "react-redux";
 import { withParams } from "../../router";
+import { changeAppNumberIsLoading } from "../../Store/Globals/global.slice";
 
 class ProductsPage extends Component {
   constructor(props) {
@@ -37,7 +38,10 @@ class ProductsPage extends Component {
   }
 
   async componentDidMount() {
+    this.props.changeAppNumberIsLoading(1);
     await this.props.fetchProductByIdAsync(this.props.params.id);
+    this.props.changeAppNumberIsLoading(-1);
+
     if (this.props.currentProduct.id != this.state.cartObject)
       this.setState({
         // deep copy
@@ -198,6 +202,7 @@ const mapDispatchToProps = {
   restSelectedProducts,
   addItemToCart,
   updateProductInCart,
+  changeAppNumberIsLoading,
 };
 export default connect(
   mapStateToProps,

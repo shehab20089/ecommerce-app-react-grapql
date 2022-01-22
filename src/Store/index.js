@@ -3,6 +3,7 @@ import categoriesReducer from "./Categories/categories.slice";
 import productsReducer from "./Products/Products.slice";
 import currenciesReducer from "./Currency/Currency.slice";
 import cartReducer from "./Cart/Cart.slice";
+import globalReducer from "./Globals/global.slice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     products: productsReducer,
     currencies: currenciesReducer,
     cart: cartReducer,
+    global: globalReducer,
   },
 });

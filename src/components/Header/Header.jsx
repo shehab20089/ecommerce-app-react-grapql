@@ -39,6 +39,7 @@ import { Link } from "react-router-dom";
 import CartItem from "../CartItem/CartItem";
 import { BaseButton } from "../Base";
 import { localStorageConstants } from "../../constants";
+import { changeAppNumberIsLoading } from "../../Store/Globals/global.slice";
 
 class Header extends Component {
   constructor(props) {
@@ -46,8 +47,11 @@ class Header extends Component {
     this.state = { showOverlay: false };
   }
   async componentDidMount() {
+    this.props.changeAppNumberIsLoading(1);
     await this.props.fetchCategoriesAsync();
     await this.props.fetchCurrenciesAsync();
+    this.props.changeAppNumberIsLoading(-1);
+
     const cartItems = JSON.parse(
       localStorage.getItem(localStorageConstants.CART_PRODUCTS)
     );
@@ -214,5 +218,6 @@ const mapDispatchToProps = {
   fetchCurrenciesAsync,
   fetchCart,
   updateProductInCart,
+  changeAppNumberIsLoading,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

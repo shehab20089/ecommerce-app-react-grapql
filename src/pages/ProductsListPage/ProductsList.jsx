@@ -12,15 +12,19 @@ import {
   addItemToCart,
   updateProductInCart,
 } from "../../Store/Cart/Cart.slice";
+import { changeAppNumberIsLoading } from "../../Store/Globals/global.slice";
 
 class ProductsList extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.title != prevProps.title)
       this.props.fetchProductsByCategoryAsync(this.props.title);
   }
-  componentDidMount() {
-    if (this.props.title)
-      this.props.fetchProductsByCategoryAsync(this.props.title);
+  async componentDidMount() {
+    if (this.props.title) {
+      this.props.changeAppNumberIsLoading(1);
+      await this.props.fetchProductsByCategoryAsync(this.props.title);
+      this.props.changeAppNumberIsLoading(-1);
+    }
   }
   handleProductUpdate = (updatedProduct) => {
     this.props.updateProductInCart(updatedProduct);
@@ -89,5 +93,6 @@ const mapDispatchToProps = {
   fetchProductsByCategoryAsync,
   updateProductInCart,
   addItemToCart,
+  changeAppNumberIsLoading,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ProductsList);
