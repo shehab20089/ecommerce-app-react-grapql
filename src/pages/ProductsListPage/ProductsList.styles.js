@@ -17,5 +17,5 @@ export const CategoryTitle = styled.h1`
 export const ProductsListContainer = styled.div`
   display: grid;
   gap: 103px 40px;
-  grid-template-columns: repeat(3, 386px);
+  grid-template-columns: repeat(3, 1fr);
 `;
