@@ -1,18 +1,6 @@
 import styled, { keyframes } from "styled-components/macro";
 import logo from "../../assets/logo/a-logo.png";
-import { Fade } from "../Base";
-
-const dropdownFade = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
+import { dropdownFade, Fade } from "../Base";
 
 export const StyledHeader = styled.header`
   display: flex;
@@ -132,7 +120,7 @@ export const CurrencyContainer = styled.div`
     opacity: 0;
     background-color: red;
     width: 200%;
-    height: 100px;
+    height: 50px;
   }
 `;
 export const OverLayContainer = styled.div`

@@ -3,7 +3,16 @@ import { keyframes } from "styled-components";
 export const Fade = keyframes`
   from {
     opacity: 0;
-    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
+export const dropdownFade = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(50px);
   }
 
   to {

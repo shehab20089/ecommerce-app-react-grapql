@@ -14,14 +14,13 @@ export const AttributesOverlay = styled.div`
   z-index: 0;
   top: -50px;
   right: 50px;
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 20px;
   background: white;
   margin: 0 auto;
   width: 70%;
-  opacity: 0;
-  z-index: -5;
+  animation: ${Fade} 0.3s linear;
   padding: 0.9rem;
   box-shadow: 0px 4px 35px 0px hsla(210, 5%, 67%, 0.19);
 `;
@@ -35,8 +34,8 @@ export const ProductCardCartBtn = styled.div`
   height: 50px;
   border-radius: 50%;
   &:hover ${AttributesOverlay} {
-    opacity: 1;
-    z-index: 2;
+    display: flex;
+    z-index: 3;
   }
 `;
 
