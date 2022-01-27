@@ -13,7 +13,22 @@ export const cartSlice = createSlice({
       state.cart = action.payload;
     },
     addItemToCart: (state, action) => {
-      state.cart.push(action.payload);
+      const mappedObj = action.payload;
+      mappedObj.id =
+        mappedObj.id +
+        mappedObj.attributes.reduce((sum, attribute) => {
+          return sum + attribute.selectedItem.id;
+        }, "");
+      const foundIndex = state.cart.findIndex(
+        (item) => item.id == mappedObj.id
+      );
+      if (foundIndex === -1) {
+        state.cart.push(mappedObj);
+      } else {
+        // stack existing products on each other
+        state.cart[foundIndex].quantity =
+          state.cart[foundIndex].quantity + mappedObj.quantity;
+      }
       ProductsService.saveCartProducts(state.cart);
     },
     updateProductInCart(state, action) {
