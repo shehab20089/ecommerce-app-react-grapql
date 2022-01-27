@@ -64,6 +64,7 @@ export default class ProductCard extends Component {
   render() {
     const {
       name,
+      brand,
       currentPrice,
       gallery,
       attributes,
@@ -84,7 +85,7 @@ export default class ProductCard extends Component {
               onClick={this.stopAttributePropagation}
             >
               <AttributesOverlay>
-                <OverlayTitle>{name}</OverlayTitle>
+                <OverlayTitle>{brand + " " + name}</OverlayTitle>
                 {attributes.map((attribute) => {
                   return (
                     <AttributeSelector
@@ -135,7 +136,7 @@ export default class ProductCard extends Component {
               ></Icon>
             </ProductCardCartBtn>
           </ProductCardActions>
-          <ProductCardTitle>{name}</ProductCardTitle>
+          <ProductCardTitle>{brand + " " + name}</ProductCardTitle>
           {currentPrice ? (
             <ProductCardPrice>
               {currentPrice.currency.symbol}
