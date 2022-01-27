@@ -50,7 +50,7 @@ export default class CartItem extends Component {
           <CartItemPrice size={size}>
             {currentPrice.currency.symbol}
             &nbsp;
-            {Number.parseFloat(currentPrice.amount * quantity).toFixed(2)}
+            {Number.parseFloat(currentPrice.amount).toFixed(2)}
           </CartItemPrice>
           <CartItemOptionsContainer>
             {attributes.map((attribute) => (
