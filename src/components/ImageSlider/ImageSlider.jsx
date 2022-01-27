@@ -28,22 +28,24 @@ export default class ImageSlider extends Component {
     const { gallery } = this.props;
     return (
       <ImageSliderContainer image={gallery[selectImageIndex]}>
-        <ImageSliderActionsContainer>
-          <Icon
-            onClick={() => {
-              this.handleImageChange("left");
-            }}
-            size={{ height: "13px", width: "13px" }}
-            icon={leftArrow}
-          ></Icon>
-          <Icon
-            onClick={() => {
-              this.handleImageChange("right");
-            }}
-            size={{ height: "13px", width: "13px" }}
-            icon={rightArrow}
-          ></Icon>
-        </ImageSliderActionsContainer>
+        {gallery.length > 1 ? (
+          <ImageSliderActionsContainer>
+            <Icon
+              onClick={() => {
+                this.handleImageChange("left");
+              }}
+              size={{ height: "13px", width: "13px" }}
+              icon={leftArrow}
+            ></Icon>
+            <Icon
+              onClick={() => {
+                this.handleImageChange("right");
+              }}
+              size={{ height: "13px", width: "13px" }}
+              icon={rightArrow}
+            ></Icon>
+          </ImageSliderActionsContainer>
+        ) : null}
       </ImageSliderContainer>
     );
   }
