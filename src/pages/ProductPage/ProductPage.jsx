@@ -33,7 +33,7 @@ class ProductsPage extends Component {
     super(props);
 
     this.state = {
-      cartObject: JSON.parse(JSON.stringify(this.props.currentProduct)),
+      cartObject: {},
     };
   }
 
@@ -41,23 +41,13 @@ class ProductsPage extends Component {
     this.props.changeAppNumberIsLoading(1);
     await this.props.fetchProductByIdAsync(this.props.params.id);
     this.props.changeAppNumberIsLoading(-1);
-
-    if (this.props.currentProduct.id !== this.state.cartObject)
-      this.setState({
-        // deep copy
-        cartObject: JSON.parse(JSON.stringify(this.props.currentProduct)),
-      });
-  }
-  componentDidUpdate(preProps) {
-    if (
-      JSON.stringify(preProps.currentProduct) !==
-      JSON.stringify(this.props.currentProduct)
-    ) {
-      this.setState({
-        // deep copy
-        cartObject: JSON.parse(JSON.stringify(this.props.currentProduct)),
-      });
-    }
+    this.setState({
+      // deep copy
+      cartObject: {
+        ...JSON.parse(JSON.stringify(this.props.currentProduct)),
+        quantity: 1,
+      },
+    });
   }
   componentWillUnmount() {
     this.props.restSelectedProducts();
@@ -72,11 +62,9 @@ class ProductsPage extends Component {
     this.setState({
       cartObject: updatedProduct,
     });
-    this.props.updateProductInCart(updatedProduct);
   };
   handleAddToCart = () => {
     const cartProduct = JSON.parse(JSON.stringify(this.state.cartObject));
-    cartProduct.quantity = 1;
     this.props.addItemToCart(cartProduct);
   };
   handleQuantityChange(operation) {
@@ -87,7 +75,6 @@ class ProductsPage extends Component {
     const updatedProduct = JSON.parse(JSON.stringify(this.state.cartObject));
     updatedProduct.quantity = updatedQuantity;
     this.setState({ cartObject: updatedProduct });
-    this.props.updateProductInCart(updatedProduct);
   }
   renderInStock = () => {
     const inStock = this.props.currentProduct.inStock;
@@ -96,8 +83,8 @@ class ProductsPage extends Component {
         <ProductPageErrorTitle>Product is out of stock</ProductPageErrorTitle>
       );
     else {
-      if (this.props.cartData.id) {
-        return (
+      return (
+        <>
           <QuantityContainer>
             <QuantityBtn
               onClick={() => this.handleQuantityChange("+")}
@@ -109,9 +96,10 @@ class ProductsPage extends Component {
             >
               +
             </QuantityBtn>
-            {this.props.cartData.quantity}
+            {this.state.cartObject.quantity}
             <QuantityBtn
               onClick={() => this.handleQuantityChange("-")}
+              disabled={this.state.cartObject.quantity <= 1}
               size={{
                 height: "30px",
                 width: "30px",
@@ -121,18 +109,15 @@ class ProductsPage extends Component {
               -
             </QuantityBtn>
           </QuantityContainer>
-        );
-      }
+          <BaseButton
+            onClick={this.handleAddToCart}
+            size={{ height: "52px", font: "0.9rem" }}
+          >
+            Add to card
+          </BaseButton>
+        </>
+      );
     }
-
-    return (
-      <BaseButton
-        onClick={this.handleAddToCart}
-        size={{ height: "52px", font: "0.9rem" }}
-      >
-        Add to card
-      </BaseButton>
-    );
   };
   render() {
     const { name, brand, gallery, attributes, currentPrice, description } =
@@ -185,28 +170,18 @@ const mapStateToProps = (state) => {
       return price.currency.symbol === state.currencies.selectedCurrency.symbol;
     });
   }
-  const productInCart = state.cart.cart.find(
-    (item) => item.id === mappedProduct.id
-  );
-  const isItemInCart = productInCart ? true : false;
-  if (isItemInCart) mappedProduct.quantity = productInCart.quantity;
-  if (currentProduct.attributes) {
-    mappedProduct.attributes = mappedProduct.attributes.map(
-      (attribute, index) => {
-        const newAttribute = { ...attribute };
 
-        newAttribute.selectedItem = !isItemInCart
-          ? attribute.items[0]
-          : productInCart.attributes[index].selectedItem;
-        return newAttribute;
-      }
-    );
+  if (currentProduct.attributes) {
+    mappedProduct.attributes = mappedProduct.attributes.map((attribute) => {
+      const newAttribute = { ...attribute };
+
+      newAttribute.selectedItem = attribute.items[0];
+      return newAttribute;
+    });
   }
 
   return {
     currentProduct: mappedProduct,
-    cartData: isItemInCart ? productInCart : {},
-    isItemInCart: isItemInCart,
   };
 };
 const mapDispatchToProps = {

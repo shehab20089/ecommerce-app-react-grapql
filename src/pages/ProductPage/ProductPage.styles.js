@@ -40,6 +40,11 @@ export const ProductPagePriceValue = styled.p`
   line-height: 2;
 `;
 export const QuantityContainer = styled.div`
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -47,11 +52,8 @@ export const QuantityContainer = styled.div`
 `;
 
 export const QuantityBtn = styled.div`
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -o-user-select: none;
-  user-select: none;
+  pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
+  opacity: ${({ disabled }) => (disabled ? "0.3" : "1")};
   border: 1px solid #1d1f22;
   height: ${({ size }) => size.height};
   width: ${({ size }) => size.width};
