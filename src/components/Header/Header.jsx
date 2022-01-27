@@ -44,7 +44,7 @@ import { changeAppNumberIsLoading } from "../../Store/Globals/global.slice";
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = { showOverlay: false };
+    this.state = { showOverlay: false, showCurrency: false };
   }
   async componentDidMount() {
     this.props.changeAppNumberIsLoading(1);
@@ -74,6 +74,10 @@ class Header extends Component {
   };
   handleProductChanges = (updatedProduct) => {
     this.props.updateProductInCart(updatedProduct);
+  };
+  handleCurrencyChange = (currency) => {
+    this.props.changeCurrency(currency);
+    this.setState({ showCurrency: false });
   };
 
   render() {
@@ -107,18 +111,22 @@ class Header extends Component {
             <LogoContainer></LogoContainer>
           </Link>
           <ActionsContainer>
-            <CurrencyContainer>
+            <CurrencyContainer
+              onClick={() =>
+                this.setState({ showCurrency: !this.state.showCurrency })
+              }
+            >
               {selectedCurrency.symbol}
               <Icon
                 size={{ width: "8px", height: "8px" }}
                 icon={downArrowIcon}
               ></Icon>
-              <CurrencyDropDownContainer>
+              <CurrencyDropDownContainer showCurrency={this.state.showCurrency}>
                 {currencies.map((currency) => {
                   return (
                     <CurrencyDropDownItem
                       key={currency.symbol}
-                      onClick={() => this.props.changeCurrency(currency)}
+                      onClick={() => this.handleCurrencyChange(currency)}
                     >
                       {currency.symbol}&nbsp;{currency.label}
                     </CurrencyDropDownItem>
@@ -126,7 +134,6 @@ class Header extends Component {
                 })}
               </CurrencyDropDownContainer>
             </CurrencyContainer>
-            {/* <Link to="/cart"> */}
             <OverLayContainer>
               <Icon
                 onClick={this.handleShowOverLay}

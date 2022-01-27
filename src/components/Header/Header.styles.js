@@ -62,7 +62,7 @@ export const ActionContainer = styled.div`
   align-items: center;
 `;
 export const CurrencyDropDownContainer = styled.div`
-  display: none;
+  display: ${({ showCurrency }) => (showCurrency ? "block" : "none")};
   position: absolute;
   top: 1.8rem;
   z-index: 4;
@@ -79,6 +79,9 @@ export const CurrencyDropDownContainer = styled.div`
 `;
 export const CurrencyDropDownItem = styled.div`
   padding: 0 1.12rem 1.1rem;
+  &:hover {
+    opacity: 0.7;
+  }
 `;
 export const Icon = styled.div`
   position: relative;
@@ -108,19 +111,8 @@ export const IconBadge = styled.div`
 export const CurrencyContainer = styled.div`
   position: relative;
   cursor: pointer;
-  &:hover ${CurrencyDropDownContainer} {
-    display: block;
-  }
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0px;
-    left: -20px;
-    z-index: 3;
-    opacity: 0;
-    background-color: red;
-    width: 200%;
-    height: 50px;
+  &:hover {
+    opacity: 0.7;
   }
 `;
 export const OverLayContainer = styled.div`
