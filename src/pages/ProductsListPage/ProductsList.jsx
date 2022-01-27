@@ -26,12 +26,8 @@ class ProductsList extends Component {
       this.props.changeAppNumberIsLoading(-1);
     }
   }
-  handleProductUpdate = (updatedProduct) => {
-    this.props.updateProductInCart(updatedProduct);
-  };
   handleAddToCart = (product) => {
     const cartProduct = JSON.parse(JSON.stringify(product));
-    cartProduct.quantity = 1;
     this.props.addItemToCart(cartProduct);
   };
 
@@ -45,7 +41,6 @@ class ProductsList extends Component {
           {productsList.map((p) => (
             <Link to={`product/${p.id}`} key={p.id}>
               <ProductCard
-                onProductChange={this.handleProductUpdate}
                 onAddClicked={this.handleAddToCart}
                 product={p}
               ></ProductCard>
@@ -65,25 +60,13 @@ const mapStateToProps = (state) => ({
     mappedProduct.currentPrice = mappedProduct.prices.find((price) => {
       return price.currency.symbol === state.currencies.selectedCurrency.symbol;
     });
-    // check product in cart
-    const productInCart = state.cart.cart.find(
-      (item) => item.id === mappedProduct.id
-    );
-    const isItemInCart = productInCart ? true : false;
-    mappedProduct.isInCart = isItemInCart;
-    // if in cart add quantity and attribute properties
-    if (isItemInCart) mappedProduct.quantity = productInCart.quantity;
     if (mappedProduct.attributes) {
-      mappedProduct.attributes = mappedProduct.attributes.map(
-        (attribute, index) => {
-          const newAttribute = { ...attribute };
+      mappedProduct.attributes = mappedProduct.attributes.map((attribute) => {
+        const newAttribute = { ...attribute };
 
-          newAttribute.selectedItem = !isItemInCart
-            ? attribute.items[0]
-            : productInCart.attributes[index].selectedItem;
-          return newAttribute;
-        }
-      );
+        newAttribute.selectedItem = attribute.items[0];
+        return newAttribute;
+      });
     }
     return mappedProduct;
   }),

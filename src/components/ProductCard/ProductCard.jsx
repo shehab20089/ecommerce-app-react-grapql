@@ -20,19 +20,11 @@ import AttributeSelector from "../ِAttributeSelector/AttributeSelector";
 export default class ProductCard extends Component {
   constructor(props) {
     super(props);
-    this.state = { currentProduct: this.props.product };
+    this.state = { currentProduct: { ...this.props.product, quantity: 1 } };
   }
   stopAttributePropagation = (e) => {
     e.preventDefault();
   };
-  componentDidUpdate(prevProp, prevState) {
-    // simple objects deep comparison
-    if (JSON.stringify(this.props.product) !== JSON.stringify(prevProp.product))
-      this.setState({
-        currentProduct: this.props.product,
-      });
-  }
-
   handleAttributeChange = (item, attributeId) => {
     // deep copy
     const updatedProduct = JSON.parse(
@@ -43,7 +35,6 @@ export default class ProductCard extends Component {
     );
     updatedProduct.attributes[attributeIndex].selectedItem = item;
     this.setState({ currentProduct: updatedProduct });
-    this.props.onProductChange(updatedProduct);
   };
   handleAddToCart = () => {
     this.props.onAddClicked(this.state.currentProduct);
@@ -58,20 +49,12 @@ export default class ProductCard extends Component {
     );
     updatedProduct.quantity = updatedQuantity;
     this.setState({ currentProduct: updatedProduct });
-    this.props.onProductChange(updatedProduct);
   }
 
   render() {
-    const {
-      name,
-      brand,
-      currentPrice,
-      gallery,
-      attributes,
-      isInCart,
-      quantity,
-      inStock,
-    } = this.props.product;
+    const { name, brand, currentPrice, gallery, attributes, inStock } =
+      this.props.product;
+    const { quantity } = this.state.currentProduct;
     return (
       <ProductCardContainer isInStock={inStock}>
         <ProductCardAvatar
@@ -96,38 +79,38 @@ export default class ProductCard extends Component {
                     ></AttributeSelector>
                   );
                 })}
-                {isInCart ? (
-                  <QuantityContainer>
-                    <QuantityBtn
-                      onClick={() => this.handleQuantityChange("+")}
-                      size={{
-                        height: "30px",
-                        width: "30px",
-                        fontSize: "1.5rem",
-                      }}
-                    >
-                      +
-                    </QuantityBtn>
-                    {quantity}
-                    <QuantityBtn
-                      onClick={() => this.handleQuantityChange("-")}
-                      size={{
-                        height: "30px",
-                        width: "30px",
-                        fontSize: "1.5rem",
-                      }}
-                    >
-                      -
-                    </QuantityBtn>
-                  </QuantityContainer>
-                ) : (
-                  <BaseButton
-                    size={{ height: "30px" }}
-                    onClick={this.handleAddToCart}
+
+                <QuantityContainer>
+                  <QuantityBtn
+                    onClick={() => this.handleQuantityChange("+")}
+                    size={{
+                      height: "30px",
+                      width: "30px",
+                      fontSize: "1.5rem",
+                    }}
                   >
-                    Add to Cart
-                  </BaseButton>
-                )}
+                    +
+                  </QuantityBtn>
+                  {quantity}
+                  <QuantityBtn
+                    onClick={() => this.handleQuantityChange("-")}
+                    disabled={quantity <= 1}
+                    size={{
+                      height: "30px",
+                      width: "30px",
+                      fontSize: "1.5rem",
+                    }}
+                  >
+                    -
+                  </QuantityBtn>
+                </QuantityContainer>
+
+                <BaseButton
+                  size={{ height: "30px" }}
+                  onClick={this.handleAddToCart}
+                >
+                  Add to Cart
+                </BaseButton>
               </AttributesOverlay>
 
               <Icon

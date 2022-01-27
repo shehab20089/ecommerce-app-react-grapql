@@ -103,6 +103,8 @@ export const QuantityBtn = styled.div`
   -o-user-select: none;
   user-select: none;
   border: 1px solid #1d1f22;
+  pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
+  opacity: ${({ disabled }) => (disabled ? "0.3" : "1")};
   height: ${({ size }) => size.height};
   width: ${({ size }) => size.width};
   display: flex;
