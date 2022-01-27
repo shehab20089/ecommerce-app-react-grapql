@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components/macro";
+import styled from "styled-components/macro";
 import logo from "../../assets/logo/a-logo.png";
 import { dropdownFade, Fade } from "../Base";
 

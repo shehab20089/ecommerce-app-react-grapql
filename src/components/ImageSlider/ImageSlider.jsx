@@ -14,7 +14,7 @@ export default class ImageSlider extends Component {
   }
   handleImageChange = (direction) => {
     let newImageIndex =
-      direction == "left"
+      direction === "left"
         ? this.state.selectImageIndex - 1
         : this.state.selectImageIndex + 1;
     if (newImageIndex >= this.props.gallery.length) newImageIndex = 0;

@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
   const products = state.cart.cart.map((product) => {
     const mappedProduct = JSON.parse(JSON.stringify(product));
     mappedProduct.currentPrice = mappedProduct.prices.find((price) => {
-      return price.currency.symbol == state.currencies.selectedCurrency.symbol;
+      return price.currency.symbol === state.currencies.selectedCurrency.symbol;
     });
     return mappedProduct;
   });

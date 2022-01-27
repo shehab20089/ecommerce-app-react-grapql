@@ -19,14 +19,14 @@ export const cartSlice = createSlice({
     updateProductInCart(state, action) {
       const mappedCart = state.cart
         .map((item) => {
-          if (item.id == action.payload.id) {
+          if (item.id === action.payload.id) {
             if (action.payload.quantity < 1) return "deleted";
 
             return action.payload;
           }
           return item;
         })
-        .filter((item) => item != "deleted");
+        .filter((item) => item !== "deleted");
       ProductsService.saveCartProducts(mappedCart);
 
       return {

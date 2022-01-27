@@ -92,7 +92,7 @@ class Header extends Component {
             {categories.map((category) => {
               return (
                 <MenuListItem
-                  active={selectedCategory == category.name}
+                  active={selectedCategory === category.name}
                   key={category.name}
                   onClick={() => this.handleNavChange(category.name)}
                 >
@@ -193,7 +193,7 @@ const mapStateToProps = (state) => {
     const mappedProduct = JSON.parse(JSON.stringify(product));
     // adding custom property currentPrice which change with the currency change
     mappedProduct.currentPrice = mappedProduct.prices.find((price) => {
-      return price.currency.symbol == state.currencies.selectedCurrency.symbol;
+      return price.currency.symbol === state.currencies.selectedCurrency.symbol;
     });
     return mappedProduct;
   });

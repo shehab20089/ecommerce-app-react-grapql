@@ -20,7 +20,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isLoading: state.global.state == "loading" ? true : false,
+    isLoading: state.global.state === "loading" ? true : false,
   };
 };
 const mapDispatchToProps = {};

@@ -16,7 +16,7 @@ import { changeAppNumberIsLoading } from "../../Store/Globals/global.slice";
 
 class ProductsList extends Component {
   componentDidUpdate(prevProps) {
-    if (this.props.title != prevProps.title)
+    if (this.props.title !== prevProps.title)
       this.props.fetchProductsByCategoryAsync(this.props.title);
   }
   async componentDidMount() {
@@ -63,11 +63,11 @@ const mapStateToProps = (state) => ({
     const mappedProduct = {};
     Object.assign(mappedProduct, product);
     mappedProduct.currentPrice = mappedProduct.prices.find((price) => {
-      return price.currency.symbol == state.currencies.selectedCurrency.symbol;
+      return price.currency.symbol === state.currencies.selectedCurrency.symbol;
     });
     // check product in cart
     const productInCart = state.cart.cart.find(
-      (item) => item.id == mappedProduct.id
+      (item) => item.id === mappedProduct.id
     );
     const isItemInCart = productInCart ? true : false;
     mappedProduct.isInCart = isItemInCart;

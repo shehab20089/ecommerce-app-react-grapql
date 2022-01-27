@@ -39,7 +39,7 @@ export default class ProductCard extends Component {
       JSON.stringify(this.state.currentProduct)
     );
     const attributeIndex = updatedProduct.attributes.findIndex(
-      (a) => a.id == attributeId
+      (a) => a.id === attributeId
     );
     updatedProduct.attributes[attributeIndex].selectedItem = item;
     this.setState({ currentProduct: updatedProduct });
@@ -50,7 +50,7 @@ export default class ProductCard extends Component {
   };
   handleQuantityChange(operation) {
     const updatedQuantity =
-      operation == "+"
+      operation === "+"
         ? this.state.currentProduct.quantity + 1
         : this.state.currentProduct.quantity - 1;
     const updatedProduct = JSON.parse(

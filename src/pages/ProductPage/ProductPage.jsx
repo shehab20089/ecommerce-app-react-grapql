@@ -42,7 +42,7 @@ class ProductsPage extends Component {
     await this.props.fetchProductByIdAsync(this.props.params.id);
     this.props.changeAppNumberIsLoading(-1);
 
-    if (this.props.currentProduct.id != this.state.cartObject)
+    if (this.props.currentProduct.id !== this.state.cartObject)
       this.setState({
         // deep copy
         cartObject: JSON.parse(JSON.stringify(this.props.currentProduct)),
@@ -50,7 +50,7 @@ class ProductsPage extends Component {
   }
   componentDidUpdate(preProps) {
     if (
-      JSON.stringify(preProps.currentProduct) !=
+      JSON.stringify(preProps.currentProduct) !==
       JSON.stringify(this.props.currentProduct)
     ) {
       this.setState({
@@ -66,7 +66,7 @@ class ProductsPage extends Component {
     // deep copy
     const updatedProduct = JSON.parse(JSON.stringify(this.state.cartObject));
     const attributeIndex = updatedProduct.attributes.findIndex(
-      (a) => a.id == attributeId
+      (a) => a.id === attributeId
     );
     updatedProduct.attributes[attributeIndex].selectedItem = item;
     this.setState({
@@ -81,7 +81,7 @@ class ProductsPage extends Component {
   };
   handleQuantityChange(operation) {
     const updatedQuantity =
-      operation == "+"
+      operation === "+"
         ? this.state.cartObject.quantity + 1
         : this.state.cartObject.quantity - 1;
     const updatedProduct = JSON.parse(JSON.stringify(this.state.cartObject));
@@ -182,11 +182,11 @@ const mapStateToProps = (state) => {
 
   if (currentProduct.prices) {
     mappedProduct.currentPrice = mappedProduct.prices.find((price) => {
-      return price.currency.symbol == state.currencies.selectedCurrency.symbol;
+      return price.currency.symbol === state.currencies.selectedCurrency.symbol;
     });
   }
   const productInCart = state.cart.cart.find(
-    (item) => item.id == mappedProduct.id
+    (item) => item.id === mappedProduct.id
   );
   const isItemInCart = productInCart ? true : false;
   if (isItemInCart) mappedProduct.quantity = productInCart.quantity;

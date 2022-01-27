@@ -21,7 +21,7 @@ export default class ImageGallery extends Component {
     });
   }
   componentDidUpdate(prevState) {
-    if (this.props.images[0] != prevState.images[0]) {
+    if (this.props.images[0] !== prevState.images[0]) {
       this.setState({
         selectedImage: this.props.images[0],
       });
