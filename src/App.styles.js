@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { AppearFromRight, Fade, hideToRight, Spin } from "./components/Base";
+import { AppearFromRight, hideToRight, Spin } from "./components/Base";
 
 export const AppWrapper = styled.div`
   position: ${({ isLoading }) => (isLoading ? "fixed" : "static")};

@@ -31,7 +31,7 @@ export const globalSlice = createSlice({
       const timer = action.payload.timer;
 
       const notificationIndex = state.notificationsList.findIndex(
-        (n) => n.id == notificationId
+        (n) => n.id === notificationId
       );
       state.notificationsList[notificationIndex].isDeleted = true;
       if (timer) clearTimeout(timer);

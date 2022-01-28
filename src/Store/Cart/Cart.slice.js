@@ -20,7 +20,7 @@ export const cartSlice = createSlice({
           return sum + attribute.selectedItem.id;
         }, "");
       const foundIndex = state.cart.findIndex(
-        (item) => item.id == mappedObj.id
+        (item) => item.id === mappedObj.id
       );
       if (foundIndex === -1) {
         state.cart.push(mappedObj);
