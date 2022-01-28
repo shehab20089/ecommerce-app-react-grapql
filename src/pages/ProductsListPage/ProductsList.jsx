@@ -12,7 +12,10 @@ import {
   addItemToCart,
   updateProductInCart,
 } from "../../Store/Cart/Cart.slice";
-import { changeAppNumberIsLoading } from "../../Store/Globals/global.slice";
+import {
+  showNotification,
+  changeAppNumberIsLoading,
+} from "../../Store/Globals/global.slice";
 
 class ProductsList extends Component {
   componentDidUpdate(prevProps) {
@@ -29,6 +32,12 @@ class ProductsList extends Component {
   handleAddToCart = (product) => {
     const cartProduct = JSON.parse(JSON.stringify(product));
     this.props.addItemToCart(cartProduct);
+    this.props.showNotification({
+      duration: 5000,
+      text: `${cartProduct.quantity} Product(s) ${
+        cartProduct.brand + " " + cartProduct.name
+      } Added To the Cart`,
+    });
   };
 
   render() {
@@ -77,5 +86,6 @@ const mapDispatchToProps = {
   updateProductInCart,
   addItemToCart,
   changeAppNumberIsLoading,
+  showNotification,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ProductsList);

@@ -26,7 +26,10 @@ import {
 } from "../../Store/Cart/Cart.slice";
 import { connect } from "react-redux";
 import { withParams } from "../../router";
-import { changeAppNumberIsLoading } from "../../Store/Globals/global.slice";
+import {
+  changeAppNumberIsLoading,
+  showNotification,
+} from "../../Store/Globals/global.slice";
 
 class ProductsPage extends Component {
   constructor(props) {
@@ -66,6 +69,12 @@ class ProductsPage extends Component {
   handleAddToCart = () => {
     const cartProduct = JSON.parse(JSON.stringify(this.state.cartObject));
     this.props.addItemToCart(cartProduct);
+    this.props.showNotification({
+      duration: 5000,
+      text: `${cartProduct.quantity} Product(s) ${
+        cartProduct.brand + " " + cartProduct.name
+      } Added To the Cart`,
+    });
   };
   handleQuantityChange(operation) {
     const updatedQuantity =
@@ -190,6 +199,7 @@ const mapDispatchToProps = {
   addItemToCart,
   updateProductInCart,
   changeAppNumberIsLoading,
+  showNotification,
 };
 export default connect(
   mapStateToProps,
