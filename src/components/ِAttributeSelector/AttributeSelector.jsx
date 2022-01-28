@@ -26,7 +26,7 @@ export default class AttributeSelector extends Component {
   };
   render() {
     const { name, items, type } = this.props.attribute;
-    const { size } = this.props;
+    const { size, hideUnselected } = this.props;
     const { selectedAttribute } = this.state;
 
     return (
@@ -34,6 +34,8 @@ export default class AttributeSelector extends Component {
         <AttributeTitle size={size}>{name}:</AttributeTitle>
         <AttributeSelection>
           {items.map((item) => {
+            if (hideUnselected && selectedAttribute.value !== item.value)
+              return null;
             return type !== "swatch" ? (
               <AttributeSelectionItem
                 size={size}

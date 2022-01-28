@@ -58,6 +58,7 @@ export default class CartItem extends Component {
                 size={size}
                 key={attribute.name}
                 onAttributeChange={this.handleAttributeChange}
+                hideUnselected={true}
                 attribute={attribute}
               ></AttributeSelector>
             ))}
