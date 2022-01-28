@@ -34,7 +34,7 @@ class ProductsList extends Component {
     this.props.addItemToCart(cartProduct);
     this.props.showNotification({
       duration: 5000,
-      text: `${cartProduct.quantity} Product(s) ${
+      text: `${cartProduct.quantity} ${
         cartProduct.brand + " " + cartProduct.name
       } Added To the Cart`,
     });

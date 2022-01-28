@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import DOMPurify from "dompurify";
 import {
   ProductPageContainer,
   ProductPageInfo,
@@ -71,7 +72,7 @@ class ProductsPage extends Component {
     this.props.addItemToCart(cartProduct);
     this.props.showNotification({
       duration: 5000,
-      text: `${cartProduct.quantity} Product(s) ${
+      text: `${cartProduct.quantity}  ${
         cartProduct.brand + " " + cartProduct.name
       } Added To the Cart`,
     });
@@ -161,7 +162,12 @@ class ProductsPage extends Component {
           {this.renderInStock()}
 
           <ProductPageDescription
-            dangerouslySetInnerHTML={{ __html: description }}
+            // There is not alternative to dangerouslySetInnerHTML but
+            // to fix the security XSS issue of incoming html
+            // I used dompurify to sanitize the incoming html and ensure it is secure
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(description),
+            }}
           ></ProductPageDescription>
         </ProductPageInfo>
       </ProductPageContainer>
