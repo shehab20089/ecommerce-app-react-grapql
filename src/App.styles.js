@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Spin } from "./components/Base";
+import styled, { css } from "styled-components";
+import { AppearFromRight, Fade, hideToRight, Spin } from "./components/Base";
 
 export const AppWrapper = styled.div`
   position: ${({ isLoading }) => (isLoading ? "fixed" : "static")};
@@ -26,4 +26,41 @@ export const ActivityIndicator = styled.div`
   height: 80px;
 
   animation: ${Spin} 2s linear infinite;
+`;
+export const NotificationsContainer = styled.div`
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 111;
+  overflow: hidden;
+`;
+
+export const NotificationItem = styled.div`
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+
+  width: 300px;
+  z-index: 111;
+  background-color: var(--clr-primary);
+  opacity: 0.7;
+  border-radius: 4px;
+  color: white;
+  padding: 1rem;
+  margin: 0.5rem;
+  ${({ deleted }) =>
+    deleted
+      ? css`
+          animation: ${hideToRight} 0.4s ease-in forwards;
+        `
+      : css`
+          animation: ${AppearFromRight} 0.8s ease-out forwards;
+        `}
+
+  cursor: pointer;
+  &:hover {
+    opacity: 1;
+  }
 `;
