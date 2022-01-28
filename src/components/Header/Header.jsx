@@ -21,6 +21,7 @@ import {
   TotalPriceLabel,
   TotalPriceAmount,
   IconBadge,
+  CurrencySymbol,
 } from "./Header.styles";
 import downArrowIcon from "../../assets/icons/downArrow.svg";
 import cartIcon from "../../assets/icons/EmptyCart.svg";
@@ -116,7 +117,8 @@ class Header extends Component {
                 this.setState({ showCurrency: !this.state.showCurrency })
               }
             >
-              {selectedCurrency.symbol}
+              <CurrencySymbol>{selectedCurrency.symbol}</CurrencySymbol>
+
               <Icon
                 size={{ width: "8px", height: "8px" }}
                 icon={downArrowIcon}

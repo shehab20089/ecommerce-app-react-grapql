@@ -77,6 +77,11 @@ export const CurrencyDropDownContainer = styled.div`
 
   padding-top: 1.12rem;
 `;
+export const CurrencySymbol = styled.span`
+  &:hover {
+    opacity: 0.7;
+  }
+`;
 export const CurrencyDropDownItem = styled.div`
   padding: 0 1.12rem 1.1rem;
   &:hover {
@@ -111,9 +116,6 @@ export const IconBadge = styled.div`
 export const CurrencyContainer = styled.div`
   position: relative;
   cursor: pointer;
-  &:hover {
-    opacity: 0.7;
-  }
 `;
 export const OverLayContainer = styled.div`
   position: relative;
