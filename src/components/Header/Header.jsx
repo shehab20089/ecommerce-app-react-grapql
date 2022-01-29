@@ -52,13 +52,20 @@ class Header extends Component {
     await this.props.fetchCategoriesAsync();
     await this.props.fetchCurrenciesAsync();
     this.props.changeAppNumberIsLoading(-1);
+    document.addEventListener("click", this.handleClickOutside, false);
 
     const cartItems = JSON.parse(
       localStorage.getItem(localStorageConstants.CART_PRODUCTS)
     );
     if (cartItems) this.props.fetchCart(cartItems);
   }
-  handleShowOverLay = () => {
+  handleClickOutside = () => {
+    console.log("second");
+
+    this.setState({ showOverlay: false, showCurrency: false });
+  };
+  handleShowOverLay = (e) => {
+    e.stopPropagation();
     if (!this.state.showOverlay) {
       const body = document.body;
       body.style.position = "fixed";
@@ -76,7 +83,9 @@ class Header extends Component {
   handleProductChanges = (updatedProduct) => {
     this.props.updateProductInCart(updatedProduct);
   };
-  handleCurrencyChange = (currency) => {
+  handleCurrencyChange = (currency, e) => {
+    e.preventDefault();
+    e.stopPropagation();
     this.props.changeCurrency(currency);
     this.setState({ showCurrency: false });
   };
@@ -113,9 +122,12 @@ class Header extends Component {
           </Link>
           <ActionsContainer>
             <CurrencyContainer
-              onClick={() =>
-                this.setState({ showCurrency: !this.state.showCurrency })
-              }
+              onClick={(e) => {
+                console.log("first");
+                e.preventDefault();
+                e.stopPropagation();
+                this.setState({ showCurrency: !this.state.showCurrency });
+              }}
             >
               <CurrencySymbol>{selectedCurrency.symbol}</CurrencySymbol>
 
@@ -128,7 +140,7 @@ class Header extends Component {
                   return (
                     <CurrencyDropDownItem
                       key={currency.symbol}
-                      onClick={() => this.handleCurrencyChange(currency)}
+                      onClick={(e) => this.handleCurrencyChange(currency, e)}
                     >
                       {currency.symbol}&nbsp;{currency.label}
                     </CurrencyDropDownItem>
@@ -146,7 +158,10 @@ class Header extends Component {
                   <IconBadge>{numberOfItemsInCart}</IconBadge>
                 ) : null}
               </Icon>
-              <CartDropDownContainer showOverlay={this.state.showOverlay}>
+              <CartDropDownContainer
+                onClick={(e) => e.stopPropagation()}
+                showOverlay={this.state.showOverlay}
+              >
                 <CartDropDownTitle>
                   My Bag ,{" "}
                   <CartDropDownTitleSpan>
